@@ -29,10 +29,10 @@ from utils.prompter import Prompter
 def train(
     # model/data params
     base_model: str = "",  # the only required argument
-    output_dir: str = "./lora-alpaca",
+    output_dir: str = "./prova_training_1",
     # training hyperparams
-    batch_size: int = 128,
-    micro_batch_size: int = 4,
+    batch_size: int = 16,
+    micro_batch_size: int = 16,
     num_epochs: int = 3,
     learning_rate: float = 3e-4,
     cutoff_len: int = 256,
@@ -46,13 +46,13 @@ def train(
         "v_proj",
     ],
     # llm hyperparams
-    train_on_inputs: bool = True,  # if False, masks out inputs in loss
-    add_eos_token: bool = False,
+    train_on_inputs: bool = False,  # if False, masks out inputs in loss
+    add_eos_token: bool = True,
     group_by_length: bool = False,  # faster, but produces an odd training loss curve
     # wandb params
     wandb_project: str = "",
     wandb_run_name: str = "",
-    wandb_watch: str = "all",  # options: false | gradients | all
+    wandb_watch: str = "gradients",  # options: false | gradients | all      (all creates an error in training)
     wandb_log_model: str = "true",  # options: false | true
     resume_from_checkpoint: str = None,  # either training checkpoint or final adapter
     prompt_template_name: str = "alpaca",  # The prompt template to use, will default to alpaca.
@@ -211,12 +211,10 @@ def train(
     train=preprocess_webnlg(dataset_base_path+dataset_version_path+"webnlg_release_v2.1_train.json")
     val=preprocess_webnlg(dataset_base_path+dataset_version_path+"webnlg_release_v2.1_dev.json")
     
-    train_data=list(map(lambda x: generate_and_tokenize_prompt(x),train))
-    val_data=list(map(lambda x: generate_and_tokenize_prompt(x),val))
-    random.shuffle(train_data)
-    random.shuffle(val_data)
-    
-    print(train_data[0])
+    train_data=list(map(lambda x: generate_and_tokenize_prompt(x),train))[:128]
+    val_data=list(map(lambda x: generate_and_tokenize_prompt(x),val))[:128]
+    # random.shuffle(train_data)
+    # random.shuffle(val_data)
 
     if not ddp and torch.cuda.device_count() > 1:
         # keeps Trainer from trying its own DataParallelism when more than 1 gpu is available
@@ -238,11 +236,11 @@ def train(
             optim="adamw_torch",
             evaluation_strategy="steps" if val_set_size > 0 else "no",
             save_strategy="steps",
-            eval_steps=200 if val_set_size > 0 else None,
-            save_steps=200,
+            eval_steps=10 if val_set_size > 0 else None,
+            save_steps=10,
             output_dir=output_dir,
             save_total_limit=3,
-            load_best_model_at_end=True if val_set_size > 0 else False,
+            load_best_model_at_end=False if val_set_size > 0 else False,
             ddp_find_unused_parameters=False if ddp else None,
             group_by_length=group_by_length,
             report_to="wandb" if use_wandb else None,
