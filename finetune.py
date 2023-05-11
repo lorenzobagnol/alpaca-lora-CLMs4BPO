@@ -208,13 +208,11 @@ def train(
 
     dataset_base_path="webnlg-dataset-master/"
     dataset_version_path="release_v2.1/json/"
-    train=preprocess_webnlg(dataset_base_path+dataset_version_path+"webnlg_release_v2.1_train.json")
-    val=preprocess_webnlg(dataset_base_path+dataset_version_path+"webnlg_release_v2.1_dev.json")
+    train=load_dataset("json", data_files=dataset_base_path+dataset_version_path+"webnlg_release_v2.1_train_cleaned.json")["train"]
+    val=load_dataset("json", data_files=dataset_base_path+dataset_version_path+"webnlg_release_v2.1_dev_cleaned.json")["train"]
     
-    train_data=list(map(lambda x: generate_and_tokenize_prompt(x),train))[:128]
-    val_data=list(map(lambda x: generate_and_tokenize_prompt(x),val))[:128]
-    # random.shuffle(train_data)
-    # random.shuffle(val_data)
+    train_data=train.map(generate_and_tokenize_prompt)
+    val_data=val.map(generate_and_tokenize_prompt)
 
     if not ddp and torch.cuda.device_count() > 1:
         # keeps Trainer from trying its own DataParallelism when more than 1 gpu is available
