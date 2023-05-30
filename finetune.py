@@ -29,10 +29,10 @@ from utils.prompter import Prompter
 def train(
     # model/data params
     base_model: str = "",  # the only required argument
-    output_dir: str = "./prova_training_1",
+    output_dir: str = "./training-fixed-instruction-3",
     # training hyperparams
-    batch_size: int = 16,
-    micro_batch_size: int = 16,
+    batch_size: int = 128,
+    micro_batch_size: int = 8,
     num_epochs: int = 3,
     learning_rate: float = 3e-4,
     cutoff_len: int = 256,
@@ -50,8 +50,8 @@ def train(
     add_eos_token: bool = True,
     group_by_length: bool = False,  # faster, but produces an odd training loss curve
     # wandb params
-    wandb_project: str = "",
-    wandb_run_name: str = "",
+    wandb_project: str = "training-fixed-instruction",
+    wandb_run_name: str = "run_3",
     wandb_watch: str = "gradients",  # options: false | gradients | all      (all creates an error in training)
     wandb_log_model: str = "true",  # options: false | true
     resume_from_checkpoint: str = None,  # either training checkpoint or final adapter
@@ -234,8 +234,8 @@ def train(
             optim="adamw_torch",
             evaluation_strategy="steps" if val_set_size > 0 else "no",
             save_strategy="steps",
-            eval_steps=10 if val_set_size > 0 else None,
-            save_steps=10,
+            eval_steps=50 if val_set_size > 0 else None,
+            save_steps=50,
             output_dir=output_dir,
             save_total_limit=3,
             load_best_model_at_end=False if val_set_size > 0 else False,

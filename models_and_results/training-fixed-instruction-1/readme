@@ -1,0 +1,36 @@
+"instruction": "The input is a list of triplets. Each triple has a subject, a predicate and an object. Try to produce a sentence out of it."
+
+
+
+
+CUDA SETUP: CUDA runtime path found: /usr/local/cuda/lib64/libcudart.so
+CUDA SETUP: Highest compute capability among GPUs detected: 8.0
+CUDA SETUP: Detected CUDA version 116
+CUDA SETUP: Loading binary /home/bagnol/miniconda3/envs/NLG/lib/python3.10/site-packages/bitsandbytes/libbitsandbytes_cuda116.so...
+Training Alpaca-LoRA model with params:
+base_model: huggyllama/llama-7b
+output_dir: ./training-fixed-instruction
+batch_size: 64
+micro_batch_size: 16
+num_epochs: 3
+learning_rate: 0.0003
+cutoff_len: 256
+val_set_size: 2000
+lora_r: 8
+lora_alpha: 16
+lora_dropout: 0.05
+lora_target_modules: ['q_proj', 'v_proj']
+train_on_inputs: False
+add_eos_token: True
+group_by_length: False
+wandb_project: training-fixed-instruction
+wandb_run_name: run_1
+wandb_watch: gradients
+wandb_log_model: true
+resume_from_checkpoint: False
+prompt template: alpaca
+
+
+
+BLUE score is:
+0.3390912613316733
