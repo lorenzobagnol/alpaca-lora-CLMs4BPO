@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 from tqdm import tqdm
 import fire
 import gradio as gr
@@ -8,7 +9,7 @@ import random
 import transformers
 from peft import PeftModel
 from transformers import GenerationConfig, LlamaForCausalLM, LlamaTokenizer
-
+from datasets import load_dataset
 from utils.preprocess_webnlg import preprocess_webnlg_val
 from utils.prompter import Prompter
 from nltk.translate.bleu_score import corpus_bleu
@@ -45,7 +46,7 @@ def main(
             torch_dtype=torch.float16,
             device_map="auto",
         )
-        model=PeftModel.from_pretrained(model, lora_weights, torch_dtype=torch.float16)
+        #model=PeftModel.from_pretrained(model, lora_weights, torch_dtype=torch.float16)
     else: 
         print("no GPU found")
         exit
@@ -97,15 +98,19 @@ def main(
         output = tokenizer.decode(s)
         yield prompter.get_response(output)
         
-    dataset_base_path="webnlg-dataset-master/"
-    dataset_version_path="release_v2.1/json/"
-    test=preprocess_webnlg_val(dataset_base_path+dataset_version_path+"webnlg_release_v2.1_test.json")
-    random.shuffle(test)
+
+    test=load_dataset("json", data_files="/home/bagnol/progetti/NLG/alpaca-lora/models_and_results/chatGPT-prompts/dataset/test.json")["train"]
+    shuffled_test=test.shuffle(10)
     references=list()
     pred=list()
-    for i in tqdm(range(100), "Making predictions on test set..."):
-        pred.append(next(evaluate(test[i]["instruction"],test[i]["input"])).split("\n\n###")[0])
-        references.append(test[i]["output"])
+    output=list()
+    with open("/home/bagnol/progetti/NLG/alpaca-lora/models_and_results/huggyllama-llama-7b/basemodel_prediction.json", "w") as file:
+        for i in tqdm(range(100), "Making predictions on test set..."):
+            pred.append(next(evaluate(shuffled_test[i]["instruction"],shuffled_test[i]["input"])).split("\n\n###")[0])
+            references.append(shuffled_test[i]["output"])
+            output.append(shuffled_test[i])
+            output[i]["prediction"]=pred[i]
+        json.dump(output, file, indent=4)
     print("Calculating BLEU score...")
     print("BLUE score is:")    
     print(corpus_bleu(references,pred))

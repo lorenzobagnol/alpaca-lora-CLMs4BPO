@@ -1,0 +1,27 @@
+Training Alpaca-LoRA model with params:
+base_model: huggyllama/llama-7b
+output_dir: ./chatGPT-prompts
+batch_size: 128
+micro_batch_size: 8
+num_epochs: 1
+learning_rate: 0.0003
+cutoff_len: 256
+val_set_size: 2000
+lora_r: 8
+lora_alpha: 16
+lora_dropout: 0.05
+lora_target_modules: ['q_proj', 'v_proj']
+train_on_inputs: False
+add_eos_token: True
+group_by_length: False
+wandb_project: training-chatGPT-prompts
+wandb_run_name: run_1
+wandb_watch: gradients
+wandb_log_model: true
+resume_from_checkpoint: False
+prompt template: alpaca
+
+BLUE score is:
+0.4909035233485387
+
+

@@ -1,0 +1,34 @@
+"instruction": "Using the 'input' as a provided list of triplets, where each triplet consists of a subject, predicate, and object, your task is to synthesize a single coherent sentence that effectively captures and consolidates all the information contained within the triplets. Ensure that your sentence provides a comprehensive summary of the given data, highlighting the relationships and details expressed by the subjects, predicates, and objects."
+
+
+
+CUDA SETUP: CUDA runtime path found: /usr/local/cuda/lib64/libcudart.so
+CUDA SETUP: Highest compute capability among GPUs detected: 8.0
+CUDA SETUP: Detected CUDA version 116
+CUDA SETUP: Loading binary /home/bagnol/miniconda3/envs/NLG/lib/python3.10/site-packages/bitsandbytes/libbitsandbytes_cuda116.so...
+Training Alpaca-LoRA model with params:
+base_model: huggyllama/llama-7b
+output_dir: ./training-fixed-instruction-3
+batch_size: 128
+micro_batch_size: 8
+num_epochs: 3
+learning_rate: 0.0003
+cutoff_len: 256
+val_set_size: 2000
+lora_r: 8
+lora_alpha: 16
+lora_dropout: 0.05
+lora_target_modules: ['q_proj', 'v_proj']
+train_on_inputs: False
+add_eos_token: True
+group_by_length: False
+wandb_project: training-fixed-instruction
+wandb_run_name: run_3
+wandb_watch: gradients
+wandb_log_model: true
+resume_from_checkpoint: False
+prompt template: alpaca
+
+
+BLUE score is:
+0.44168491047603997
