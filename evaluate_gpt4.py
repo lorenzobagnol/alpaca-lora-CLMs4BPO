@@ -1,6 +1,7 @@
 import openai
 import os
-os.environ["OPENAI_API_KEY"] = "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"
+import credentials
+os.environ["OPENAI_API_KEY"] = credentials.api_key
 openai.api_key = os.getenv("OPENAI_API_KEY")
 from utils.prompter import Prompter
 import pandas as pd

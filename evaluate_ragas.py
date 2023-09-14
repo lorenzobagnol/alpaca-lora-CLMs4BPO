@@ -1,5 +1,6 @@
 import os
-os.environ["OPENAI_API_KEY"] = "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"
+import credentials
+os.environ["OPENAI_API_KEY"] = credentials.api_key
 from ragas import evaluate
 import datasets
 from ragas.metrics import answer_relevancy
