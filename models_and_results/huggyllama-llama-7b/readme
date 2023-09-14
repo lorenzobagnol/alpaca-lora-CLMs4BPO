@@ -1,9 +1,0 @@
-huggyllama/llama-7b without LoRA weights, only Llama base model
-BLUE score is:
-0.4909035233485387
-
-
-
-huggyllama/llama-7b with LoRA_weights "tloen/alpaca-lora-7b" 
-BLUE score is:
-0.7696943742568376

@@ -1,218 +1,184 @@
-import os
-import sys
-
-import fire
-import gradio as gr
-import torch
-import transformers
-from peft import PeftModel
-from transformers import GenerationConfig, LlamaForCausalLM, LlamaTokenizer
-
-from utils.callbacks import Iteratorize, Stream
+from transformers import GenerationConfig, LlamaTokenizer, LlamaForCausalLM
 from utils.prompter import Prompter
+import torch
+from peft import PeftModel
+import torch
+import pandas as pd
+from tqdm import tqdm
+
+two_steps=False
+
+cables=pd.read_csv("../amazon-dataset/cables.csv")
+amps=pd.read_csv("../amazon-dataset/home_audio.csv")
+teles=pd.read_csv("../amazon-dataset/televisions.csv")
+cables = cables.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
+amps = amps.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
+teles = teles.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
+
+single_instruction="""
+I'll give you as "input" a sequence of products with their functionalities. Each product is in the form:
+
+<product> {product name}
+<features> {list of features of the product}
+
+You have to write a description of a luxury ship room containing these products. Do not copy the features, try to focus on the user experience instead of the technical details.
+Write it with an engaging tone for the ship website.
+"""
+
+instruction_1="""
+I'll give you as "input" a product with his features in the form:
+
+<product> {product name}
+<features> {list of features of the product} 
+
+Provide me with the main things a user can do with this product. Do not copy the features, try to focus on the user experience instead of the technical details.
+"""
+
+instruction_2 = """
+I'll give you as "input" a sequence of products with their functionalities. Each product is in the form:
+
+<product> {product name}
+<functionalities> {functionalities of the product}
+
+You have to write a description of a luxury ship room containing these products. Write a text emphasizing the functionalities related to each product.
+Write it with an engaging tone for the ship website.
+
+
+"""
+
+prod_list=[prod for prod in amps["title"]]+[prod for prod in teles["title"]]+[prod for prod in cables["title"]]
+spec_list=[feat for feat in amps["feature"]]+[feat for feat in teles["feature"]]+[feat for feat in cables["feature"]]
+input_1=list()
+assert len(prod_list)==len(spec_list)
+for i in range(len(prod_list)):
+    input_1.append("<product> "+prod_list[i]+"\n<features> "+str(spec_list[i])+"\n\n")
+
 
 if torch.cuda.is_available():
     device = "cuda"
 else:
     device = "cpu"
-
 try:
     if torch.backends.mps.is_available():
         device = "mps"
 except:  # noqa: E722
     pass
 
-
-def main(
-    load_8bit: bool = False,
-    base_model: str = "",
-    lora_weights: str = "./lora-fixed-prompts",
-    prompt_template: str = "",  # The prompt template to use, will default to alpaca.
-    server_name: str = "0.0.0.0",  # Allows to listen on all interfaces by providing '0.
-    share_gradio: bool = True,
-):
-    base_model = base_model or os.environ.get("BASE_MODEL", "")
-    assert (
-        base_model
-    ), "Please specify a --base_model, e.g. --base_model='huggyllama/llama-7b'"
-
-    prompter = Prompter(prompt_template)
-    tokenizer = LlamaTokenizer.from_pretrained(base_model)
-    if device == "cuda":
-        model = LlamaForCausalLM.from_pretrained(
-            base_model,
-            load_in_8bit=load_8bit,
-            torch_dtype=torch.float16,
-            device_map="auto",
-        )
-        model = PeftModel.from_pretrained(
+prompter = Prompter()
+tokenizer = LlamaTokenizer.from_pretrained("huggyllama/llama-7b")
+model = LlamaForCausalLM.from_pretrained(
+    "huggyllama/llama-7b",
+    load_in_8bit=False,
+    torch_dtype=torch.float16,
+    device_map="auto",
+)
+model = PeftModel.from_pretrained(
             model,
-            lora_weights,
+            "tloen/alpaca-lora-7b",
             torch_dtype=torch.float16,
-        )
-    elif device == "mps":
-        model = LlamaForCausalLM.from_pretrained(
-            base_model,
-            device_map={"": device},
-            torch_dtype=torch.float16,
-        )
-        model = PeftModel.from_pretrained(
-            model,
-            lora_weights,
-            device_map={"": device},
-            torch_dtype=torch.float16,
-        )
-    else:
-        model = LlamaForCausalLM.from_pretrained(
-            base_model, device_map={"": device}, low_cpu_mem_usage=True
-        )
-        model = PeftModel.from_pretrained(
-            model,
-            lora_weights,
-            device_map={"": device},
-        )
+        ).to(device)
 
-    # unwind broken decapoda-research config
-    model.config.pad_token_id = tokenizer.pad_token_id = 0  # unk
-    model.config.bos_token_id = 1
-    model.config.eos_token_id = 2
+# unwind broken decapoda-research config
+model.config.pad_token_id = tokenizer.pad_token_id = 0  # unk
+model.config.bos_token_id = 1
+model.config.eos_token_id = 2
 
-    if not load_8bit:
-        model.half()  # seems to fix bugs for some users.
+model.eval()
+if torch.__version__ >= "2":
+    model = torch.compile(model)
 
-    model.eval()
-    if torch.__version__ >= "2" and sys.platform != "win32":
-        model = torch.compile(model)
 
-    def evaluate(
-        instruction,
-        input=None,
-        temperature=0.1,
+def generate_two_step():
+    response_1=list()
+    generation_config = GenerationConfig(
+        temperature=0.2,
         top_p=0.75,
         top_k=40,
         num_beams=4,
-        max_new_tokens=128,
-        stream_output=False,
-        **kwargs,
-    ):
-        prompt = prompter.generate_prompt(instruction, input)
-        inputs = tokenizer(prompt, return_tensors="pt")
-        input_ids = inputs["input_ids"].to(device)
-        generation_config = GenerationConfig(
-            temperature=temperature,
-            top_p=top_p,
-            top_k=top_k,
-            num_beams=num_beams,
-            **kwargs,
-        )
-
-        generate_params = {
-            "input_ids": input_ids,
-            "generation_config": generation_config,
-            "return_dict_in_generate": True,
-            "output_scores": True,
-            "max_new_tokens": max_new_tokens,
-        }
-
-        if stream_output:
-            # Stream the reply 1 token at a time.
-            # This is based on the trick of using 'stopping_criteria' to create an iterator,
-            # from https://github.com/oobabooga/text-generation-webui/blob/ad37f396fc8bcbab90e11ecf17c56c97bfbd4a9c/modules/text_generation.py#L216-L243.
-
-            def generate_with_callback(callback=None, **kwargs):
-                kwargs.setdefault(
-                    "stopping_criteria", transformers.StoppingCriteriaList()
-                )
-                kwargs["stopping_criteria"].append(
-                    Stream(callback_func=callback)
-                )
-                with torch.no_grad():
-                    model.generate(**kwargs)
-
-            def generate_with_streaming(**kwargs):
-                return Iteratorize(
-                    generate_with_callback, kwargs, callback=None
-                )
-
-            with generate_with_streaming(**generate_params) as generator:
-                for output in generator:
-                    # new_tokens = len(output) - len(input_ids[0])
-                    decoded_output = tokenizer.decode(output)
-
-                    if output[-1] in [tokenizer.eos_token_id]:
-                        break
-
-                    yield prompter.get_response(decoded_output)
-            return  # early return for stream_output
-
-        # Without streaming
+        max_new_tokens=400,
+    )
+    for i in tqdm(range(len(input_1))):
+        prompt = prompter.generate_prompt(instruction_1, input_1[i])
+        input_ids = tokenizer(prompt, return_tensors="pt").input_ids
+        input_ids=input_ids.to(device)
         with torch.no_grad():
-            generation_output = model.generate(
+            outputs = model.generate(
                 input_ids=input_ids,
                 generation_config=generation_config,
                 return_dict_in_generate=True,
                 output_scores=True,
-                max_new_tokens=max_new_tokens,
             )
-        s = generation_output.sequences[0]
-        output = tokenizer.decode(s)
-        yield prompter.get_response(output)
+        response = tokenizer.decode(outputs.sequences[0], skip_special_tokens=True)
+        response= prompter.get_response(response)
+        response_1.append(response)
 
-    gr.Interface(
-        fn=evaluate,
-        inputs=[
-            gr.components.Textbox(
-                lines=2,
-                label="Instruction",
-                placeholder="Tell me about alpacas.",
-            ),
-            gr.components.Textbox(lines=2, label="Input", placeholder="none"),
-            gr.components.Slider(
-                minimum=0, maximum=1, value=0.1, label="Temperature"
-            ),
-            gr.components.Slider(
-                minimum=0, maximum=1, value=0.75, label="Top p"
-            ),
-            gr.components.Slider(
-                minimum=0, maximum=100, step=1, value=40, label="Top k"
-            ),
-            gr.components.Slider(
-                minimum=1, maximum=4, step=1, value=4, label="Beams"
-            ),
-            gr.components.Slider(
-                minimum=1, maximum=2000, step=1, value=128, label="Max tokens"
-            ),
-            gr.components.Checkbox(label="Stream output"),
-        ],
-        outputs=[
-            gr.inputs.Textbox(
-                lines=5,
-                label="Output",
+    generation_config = GenerationConfig(
+        temperature=0.2,
+        top_p=0.75,
+        top_k=40,
+        num_beams=1,
+        max_new_tokens=800,
+        do_sample=True,
+        repetition_penalty=1.16
+    )
+
+    input_2=list()
+    response_2=list()
+    for i in tqdm(range(20)):
+        input="<product> "+prod_list[i]+"\n"+"<functionalities> "+response_1[i]+"\n\n"+"<product> "+prod_list[20+i]+"\n"+"<functionalities> "+response_1[20+i]+"\n\n"+"<product> "+prod_list[40+i]+"\n"+"<functionalities> "+response_1[40+i]+"\n\n"
+        input_2.append(input)
+        prompt = prompter.generate_prompt(instruction_2, input)
+        input_ids = tokenizer(prompt, return_tensors="pt").input_ids
+        input_ids = input_ids.to(device)
+        with torch.no_grad():
+            outputs = model.generate(
+                input_ids=input_ids,
+                generation_config=generation_config,
+                return_dict_in_generate=True,
+                output_scores=True,
             )
-        ],
-        title="🦙🌲 Alpaca-LoRA",
-        description="Alpaca-LoRA is a 7B-parameter LLaMA model finetuned to follow instructions. It is trained on the [Stanford Alpaca](https://github.com/tatsu-lab/stanford_alpaca) dataset and makes use of the Huggingface LLaMA implementation. For more information, please visit [the project's website](https://github.com/tloen/alpaca-lora).",  # noqa: E501
-    ).queue().launch(server_name="0.0.0.0", share=share_gradio)
-    # Old testing code follows.
-
-    """
-    # testing code for readme
-    for instruction in [
-        "Tell me about alpacas.",
-        "Tell me about the president of Mexico in 2019.",
-        "Tell me about the king of France in 2019.",
-        "List all Canadian provinces in alphabetical order.",
-        "Write a Python program that prints the first 10 Fibonacci numbers.",
-        "Write a program that prints the numbers from 1 to 100. But for multiples of three print 'Fizz' instead of the number and for the multiples of five print 'Buzz'. For numbers which are multiples of both three and five print 'FizzBuzz'.",  # noqa: E501
-        "Tell me five words that rhyme with 'shock'.",
-        "Translate the sentence 'I have no mouth but I must scream' into Spanish.",
-        "Count up from 1 to 500.",
-    ]:
-        print("Instruction:", instruction)
-        print("Response:", evaluate(instruction))
-        print()
-    """
+        response = tokenizer.decode(outputs.sequences[0], skip_special_tokens=True)
+        response= prompter.get_response(response)
+        response_2.append(response)
 
 
-if __name__ == "__main__":
-    fire.Fire(main)
+    df=pd.DataFrame(columns=["input_2","response"])
+    for i in range(len(response_2)):
+        df.loc[len(df)]=[input_2[i],response_2[i]]
+    return df
+
+def generate_one_step(instruction=single_instruction):
+    generation_config = GenerationConfig(
+    temperature=0.2,
+    top_p=0.75,
+    top_k=40,
+    num_beams=1,
+    max_new_tokens=800,
+    do_sample=True,
+    repetition_penalty=1.16
+    )
+
+    one_step_input=list()
+    one_step_response=list()
+    for i in tqdm(range(20),desc="Generating"):
+        input="<product> "+prod_list[i]+"\n"+"<features> "+spec_list[i]+"\n\n"+"<product> "+prod_list[20+i]+"\n"+"<features> "+spec_list[20+i]+"\n\n"+"<product> "+prod_list[40+i]+"\n"+"<features> "+spec_list[40+i]+"\n\n"
+        one_step_input.append(input)
+        prompt = prompter.generate_prompt(instruction, input)
+        input_ids = tokenizer(prompt, return_tensors="pt").input_ids
+        input_ids = input_ids.to(device)
+        with torch.no_grad():
+            outputs = model.generate(
+                input_ids=input_ids,
+                generation_config=generation_config,
+                return_dict_in_generate=True,
+                output_scores=True,
+            )
+        response = tokenizer.decode(outputs.sequences[0], skip_special_tokens=True)
+        response= prompter.get_response(response)
+        one_step_response.append(response)
+
+
+    df=pd.DataFrame(columns=["input","response"])
+    for i in range(len(one_step_response)):
+        df.loc[len(df)]=[one_step_input[i],one_step_response[i]]
+    return df
