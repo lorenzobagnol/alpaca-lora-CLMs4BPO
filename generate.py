@@ -6,7 +6,6 @@ import torch
 import pandas as pd
 from tqdm import tqdm
 
-two_steps=False
 
 cables=pd.read_csv("../amazon-dataset/cables.csv")
 amps=pd.read_csv("../amazon-dataset/home_audio.csv")
