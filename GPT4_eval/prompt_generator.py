@@ -3,7 +3,7 @@ import os
 import credentials
 os.environ["OPENAI_API_KEY"] = credentials.api_key
 openai.api_key = os.getenv("OPENAI_API_KEY")
-from evaluate_gpt4 import eval
+from GPT4_eval.evaluate_gpt4 import eval
 from generate import generate_one_step
 import pandas as pd
 from tqdm import tqdm
