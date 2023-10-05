@@ -17,8 +17,14 @@ teles = teles.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
 single_instruction="""
 I'll give you as "input" a sequence of products with their functionalities. Each product is in the form:
 
-<product> {product name}
-<features> {list of features of the product}
+<product 1> {product name}
+<features> {list of features of the product 1}
+
+<product 2> {product name}
+<features> {list of features of the product 2}
+
+<product 3> {product name}
+<features> {list of features of the product 3}
 
 You have to write a description of a luxury ship room containing these products. Do not copy the features, try to focus on the user experience instead of the technical details.
 Write it with an engaging tone for the ship website.
@@ -90,9 +96,9 @@ if torch.__version__ >= "2":
 def generate_two_step():
     response_1=list()
     generation_config = GenerationConfig(
-        temperature=0.2,
-        top_p=0.75,
-        top_k=40,
+        #temperature=0.2,
+        #top_p=0.75,
+        #top_k=40,
         num_beams=4,
         max_new_tokens=400,
     )
@@ -141,9 +147,9 @@ def generate_two_step():
         response_2.append(response)
 
 
-    df=pd.DataFrame(columns=["input_2","response"])
+    df=pd.DataFrame(columns=["input_1","response"])
     for i in range(len(response_2)):
-        df.loc[len(df)]=[input_2[i],response_2[i]]
+        df.loc[len(df)]=[input_1[i],response_2[i]]
     return df
 
 def generate_one_step(instruction=single_instruction):
