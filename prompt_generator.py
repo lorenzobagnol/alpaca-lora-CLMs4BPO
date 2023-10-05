@@ -3,7 +3,7 @@ import os
 import credentials
 os.environ["OPENAI_API_KEY"] = credentials.api_key
 openai.api_key = os.getenv("OPENAI_API_KEY")
-from GPT4_eval.evaluate_gpt4 import eval
+from evaluate_gpt4 import eval
 from generate import generate_one_step
 import pandas as pd
 from tqdm import tqdm
@@ -38,19 +38,21 @@ prompt_df=pd.DataFrame(columns=["prompt", "results", "mean_value"])
 
 
 best_instruction=first_instruction
-best_generations_df=generate_one_step(best_instruction)
-max_value_list=eval(best_generations_df["response"])
+best_generations_df=pd.read_csv("./one_step.csv")
+max_value_list=list(best_generations_df["eval"])
 max_mean_value=np.mean(max_value_list)
 print("Instruction:\t"+first_instruction+"\n\nMean value evaluation:\t"+str(max_mean_value))
 prompt_df.loc[len(prompt_df)]=[first_instruction, max_value_list, max_mean_value]
 
 for i in range(20):
     instruction_generator_prompt=f"""
-    Generate a better prompt for my model. Don't forget to describe the structure of the input.
+    This is the actual intruction of my instruction-following model. 
 
-    "{best_instruction}"
+    '''{best_instruction}'''
 
-    Output only the new generated prompt.
+    Generate a better instruction knowing that my model tends not to consider all products so the intruction have to ensure that the description will integrate all of them.
+    Don't forget to describe the structure of the input.
+    Output only the new generated intruction.
     """
     new_instruction = openai.ChatCompletion.create(
             model="gpt-4",
@@ -63,6 +65,8 @@ for i in range(20):
     prompt_df.loc[len(prompt_df)]=[new_instruction, actual_eval_list, actual_meam_value]
     print("Instruction:\t"+new_instruction+"\n\nMean value evaluation:\t"+str(actual_meam_value)+"\n\n")
     if actual_meam_value>max_mean_value:
+        actual_generations_df["eval"]=actual_eval_list
+        actual_generations_df.to_csv("best_gpt_prompt_generations.csv",index=False)
         max_mean_value=actual_meam_value
         max_value_list=actual_eval_list
         best_instruction=new_instruction
