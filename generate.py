@@ -7,42 +7,20 @@ import pandas as pd
 from tqdm import tqdm
 
 
-cables=pd.read_csv("../amazon-dataset/cables.csv")
-amps=pd.read_csv("../amazon-dataset/home_audio.csv")
-teles=pd.read_csv("../amazon-dataset/televisions.csv")
-cables = cables.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
-amps = amps.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
-teles = teles.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
 
 single_instruction="""
-I'll give you as "input" a sequence of products with their functionalities. Each product is in the form:
+The input for this task will consist of a series of products, each accompanied by its unique features. The structure of each product input is as follows:
 
 <product> {product name}
-<features> {list of features of the product}
+<features> {list of features exclusive to the product}
 
-You have to write a description of a luxury ship room containing these products. Do not copy the features, try to focus on the user experience instead of the technical details.
-Write it with an engaging tone for the ship website.
-"""
+Your mission is to expertly craft a captivating narrative of a high-end ship room, housing these highlighted products. It is essential to incorporate every single product mentioned in the input into your description. Even though it isn't compulsory to name all of the specific features, they should serve as guidelines for creating your narrative of how each product boosts the deluxe experience and convenience offered by the room.
 
-instruction_1="""
-I'll give you as "input" a product with his features in the form:
+Strive to produce an imagery-rich illustration of the guest experience that will pique the interest of prospective visitors browsing the ship's website. Give equal emphasis to all products and present them in a manner where their presence amplifies the enchantment of the room without creating any disruption. 
 
-<product> {product name}
-<features> {list of features of the product} 
+Remember that your role is not just to list products, it's about intricately integrating those products into the story of the room, making the reader comprehend why each product plays a key role in enhancing the room's charm.
 
-Provide me with the main things a user can do with this product. Do not copy the features, try to focus on the user experience instead of the technical details.
-"""
-
-instruction_2 = """
-I'll give you as "input" a sequence of products with their functionalities. Each product is in the form:
-
-<product> {product name}
-<functionalities> {functionalities of the product}
-
-You have to write a description of a luxury ship room containing these products. Write a text emphasizing the functionalities related to each product.
-Write it with an engaging tone for the ship website.
-
-
+Ensure that all products are equally considered and incorporated into the narrative seamlessly. The narrative should aim to evoke the desires of the readers, making the room’s allure practically irresistible.
 """
 
 
@@ -79,52 +57,6 @@ model.eval()
 if torch.__version__ >= "2":
     model = torch.compile(model)
 
-
-def generate_two_step(input_1):
-
-    generation_config = GenerationConfig(
-        #temperature=0.2,
-        #top_p=0.75,
-        #top_k=40,
-        num_beams=4,
-        max_new_tokens=400,
-    )
-    prompt = prompter.generate_prompt(instruction_1, input_1)
-    input_ids = tokenizer(prompt, return_tensors="pt").input_ids
-    input_ids=input_ids.to(device)
-    with torch.no_grad():
-        outputs = model.generate(
-            input_ids=input_ids,
-            generation_config=generation_config,
-            return_dict_in_generate=True,
-            output_scores=True,
-        )
-    response = tokenizer.decode(outputs.sequences[0], skip_special_tokens=True)
-    response_1 = prompter.get_response(response)
-
-
-    generation_config = GenerationConfig(
-        temperature=0.2,
-        top_p=0.75,
-        top_k=40,
-        num_beams=1,
-        max_new_tokens=800,
-        do_sample=True,
-        repetition_penalty=1.16
-    )
-    prompt = prompter.generate_prompt(instruction_2, response_1)
-    input_ids = tokenizer(prompt, return_tensors="pt").input_ids
-    input_ids = input_ids.to(device)
-    with torch.no_grad():
-        outputs = model.generate(
-            input_ids=input_ids,
-            generation_config=generation_config,
-            return_dict_in_generate=True,
-            output_scores=True,
-        )
-    response = tokenizer.decode(outputs.sequences[0], skip_special_tokens=True)
-    response= prompter.get_response(response)
-    return response
 
 def generate_one_step(input):
     generation_config = GenerationConfig(
