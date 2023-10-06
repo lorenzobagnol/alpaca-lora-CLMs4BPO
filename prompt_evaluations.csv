@@ -1,10 +1,407 @@
 prompt,results,mean_value
-"""As an input, you'll receive a sequence of items and their respective functionalities. Each item is specified in the following format:
+"The input for this task will consist of a series of products, each accompanied by its unique features. The structure of each product input is as follows:
 
-<item>: {item name}
-<features>: {list of features of the item}
+<product> {product name}
+<features> {list of features exclusive to the product}
 
-Your task is to craft a captivating description of a luxurious ship suite that includes these items, for the ship's official website. Though the specification of each item includes its features, you should place emphasis on the user experience they provide, rather than their technical specifications. Remember, your goal is to entice potential guests, so strive to make your description as appealing and engaging as possible.""","[4.0, 1.0, 6.0, 4.0, 3.0, 3.0, 5.0, 4.0, 4.0, 4.0, 8.0, 3.0, 3.0, 5.0, 5.0, 4.0, 3.0, 5.0, 4.0, 4.0]",4.1
+Your mission is to expertly craft a captivating narrative of a high-end ship room, housing these highlighted products. It is essential to incorporate every single product mentioned in the input into your description. Even though it isn't compulsory to name all of the specific features, they should serve as guidelines for creating your narrative of how each product boosts the deluxe experience and convenience offered by the room.
+
+Strive to produce an imagery-rich illustration of the guest experience that will pique the interest of prospective visitors browsing the ship's website. Give equal emphasis to all products and present them in a manner where their presence amplifies the enchantment of the room without creating any disruption. 
+
+Remember that your role is not just to list products, it's about intricately integrating those products into the story of the room, making the reader comprehend why each product plays a key role in enhancing the room's charm.
+
+In order to meet the model's capacity, your instructions should ensure that all products are equally considered and incorporated into the narrative seamlessly. The narrative should aim to evoke the desires of the readers, making the room’s allure practically irresistible.","[8.5, 8.0, 8.0, 5.0, 8.0, 8.0, 7.0, 7.5, 7.0, 7.0, 8.0, 7.0, 8.0, 8.0, 7.0, 7.0, 2.0, 7.0, 8.0, 7.0]",7.15
+"""The input for your task consists of a series of products, coupled with their distinctive features. The input format is as follows:
+
+<product> {product name}
+<features> {list of features unique to the product}
+
+Your task is to tell an enchanting tale of a luxurious ship room that hosts these feature-rich products. The rule of thumb here is to weave all products mentioned in the input into the narrative of the room. It is not necessary to enumerate every feature of a product but use these features as inspiration to describe how each product contributes to the grandeur, comfort, and convenience of the room.
+
+Your task is to design an enticing, imagery-intensive representation of the guest experience, to capture the attention of potential visitors scanning the ship's website. Treat all products with equal importance and present them in a manner that heightens the overall appeal of the room without causing clutter.
+
+Your prime objective is not just to list the products but to blend these products seamlessly into the narrative, helping the reader grasp the critical role each one plays in elevating the charisma of the room. 
+
+Taking into account the model's tendency towards overlooking certain products, you should pay special attention to equal integration and articulation of all products in your narrative. This ensures each product's features are aptly reflected and contribute to the overall aura of the room.
+
+Your narrative should stimulate the readers' desires, making the allure of the room nearly irresistible. Remember, the charm lies in the balance: each product should stand out uniquely while also harmoniously blending with the room’s ambiance.""","[9.0, 7.0, 7.0, 7.0, 7.0, 7.0, 3.0, 6.0, 7.0, 5.0, 8.0, 8.0, 8.0, 7.0, 8.0, 8.0, 8.0, 8.0, 8.0, 7.0]",7.15
+"""The input for this task will be a sequence of distinct products, each paired with its particular characteristics. Each product input is structured as follows:
+
+<product> {product name}
+<features> {list of features exclusive to the product}
+
+Your main task is to weave a narrative around a luxury ship room, incorporating all the highlighted products. You must ensure that every mentioned product features in your narrative to recreate a vivid depiction of the room. However, it is not imperative to note down all the detailed features, they should act as a guide for illustrating the convenience and luxury each product adds to the room.
+
+The goal here is not merely to list down products, but to integrate them into the room's narrative in such a way that it enhances the room's appeal, allowing potential visitors to visualise why each product contributes to the overall ambiance. Every product must be given equal attention; none should be left out. Your task is to paint a verbal picture that captures the opulence and comfort of the room, through the lens of these products. 
+
+Bear in mind, the narrative should not only list products, but also seamlessly meld them into the story of the room, demonstrating to the reader why each product is essential for enhancing the room's appeal. Consider each product as an integral part of the room's narrative and weave your story around them.
+
+In order to work within the model's limitations, adjust your instructions to guarantee that all products are equally covered and blended into the narration smoothly. Your narrative should incite the desires of the readers, making the allure of the room irresistible. The end goal is to conjure imagery so striking that it leaves potential guests dreaming of the room and eager to experience its offerings.
+
+Remember, the harmony between products and space is key, should any product be left out, the narrative would lose its cohesion. Hence, follow the guidelines strictly and make every product an unforgettable piece of the ship room story.""","[9.0, 8.0, 7.0, 7.0, 6.0, 6.0, 7.0, 7.0, 2.0, 8.0, 7.0, 8.0, 7.0, 7.0, 7.0, 8.0, 8.0, 7.0, 8.0, 7.0]",7.05
+"'''In your input, you will be provided a series of products, each identified with its own exclusive features. The format of each product input is as follows:
+
+<product> {product name}
+<features> {list of features specific to the product}
+
+Your duty is to mesh these products into a vivid description of a luxurious ship room. Each product, and their unique features, must be showcased in an enticing narrative designed to appeal to potential visitors perusing the ship's website. However, you don't need to name each feature explicitly but use them as the guide to narrating the enhanced luxury ambience they create.
+
+The narrative must evoke images of opulence and intrigue, subtly implying the ways each product contributes to the grandeur of the room. Your goal isn't merely to list out the products, but to weave them into the room's story, helping the reader understand their integral role in amplifying the charm and convenience of the room.
+
+Now, it's important to maintain an equilibrium, giving each product its place in the limelight. The model has a tendency to overlook the inclusion of all products, so ensure your instruction encourages its attention to incorporating every single product evenly. 
+
+Moreover, the narrative must provoke the readers' aspirations, making the allure of the room practically irresistible. This necessitates a creative integration of the products into the room's story, so as to maintain a hypnotic flow of the narration without seeming disjointed or disruptive. 
+
+The instruction should be designed to closely respect the model's capacity, ensuring all products are assimilated into the narrative eloquently and uniformly. Remember, the narrative is as much about the glamour of the room as it is about the fascinating elements brought to it by each exceptional product.'''","[5.0, 8.0, 8.0, 7.0, 8.0, 6.0, 8.0, 8.0, 4.0, 8.0, 7.0, 6.0, 6.0, 5.0, 7.0, 7.0, 7.0, 8.0, 7.0, 6.0]",6.8
+"'''Your input will consist of a selection of distinguished products, each one described alongside its unique features. The presentation of each product in the input will be as follows:
+
+<product> {product name}
+<features> {list of features that set the product apart}
+
+Your responsibility is to devise an engaging and striking narrative about a deluxe ship room, which houses these mentioned products. You must take care to ensure that every product from the input is represented in your description. While it is not imperative that you name-drop each specific feature, these should act as guides for your narrative, enlightening how each respective product contributes to the elevated comfort and affluence of the room.
+
+Your goal is to fashion a rich, vivid illustration that encapsulates the guest experience and instigates the curiosity of prospective visitors exploring the ship's website. All products should be given an equal spotlight in your narrative and be depicted in a way that their inclusion enhances, without seeming intrusive, the allure of the room.
+
+Highlight that your role goes beyond merely enumerating products; you should skilfully weave them into the story of the room, helping the reader understand the pivotal role each product plays in enriching the charm and hence the desirability of the room.
+
+To adapt to the constraints of the model's capacity and overcome its tendency to overlook some products, your instruction should reinforce that all products are equally incorporated into the narrative in a smooth and coherent manner. The narrative should spark readers' desires, making the room’s allure virtually undeniable.
+
+In summary, this is not just a product integration instruction; it requests context-driven, narrative marketing that puts all listed products at the heart of an enticing story about an aspirational ship room. Your goal is to ensure that the narrative is compelling for the readers, making them visualize the products as integral elements that add to the lavish charm of this deluxe room.'''","[4.0, 7.0, 8.0, 8.0, 7.0, 7.0, 7.0, 8.0, 6.0, 9.0, 8.0, 7.0, 8.0, 9.0, 6.0, 4.0, 6.0, 6.0, 2.0, 8.0]",6.75
+"""In the 'input', you are given details about various products and their features. Each of these products are set out like this: 
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your task is to weave these products into an exquisite description of a high-end ship cabin, emphasizing not just the bare product features, but the elevated guest experience they cater to. This description is intended for promotional on the ship's website. Therefore, your tone should be enticing and convey a sense of luxury. The mission is not to reiterate technical details, but to provide a pictorial representation of the decadence and relaxation that these products contribute to the overall cabin experience.""","[3.0, 6.0, 7.5, 8.0, 9.0, 8.0, 7.0, 6.0, 6.0, 6.0, 7.5, 8.0, 9.0, 7.0, 7.0, 5.0, 7.0, 3.0, 3.0, 9.0]",6.6
+"""
+In the 'input', you will receive a series of different products provided along with their respective features. Each product will be presented in this manner: 
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your task is to create a captivating and luxurious description of a premium ship cabin, where these products are incorporated. You should not merely list the features of the products; instead, aim to accentuate the user experience they offer. This description is meant for marketing purposes on the ship's website, so ensure to write in an appealing and engaging tone that enhances the luxury vibe. The goal is not to reproduce technical specifications, but rather the indulgence and comfort these products add to the cabin experience.
+""","[8.0, 8.5, 6.0, 7.0, 8.5, 4.0, 9.0, 4.0, 4.0, 6.0, 8.0, 8.5, 6.0, 8.0, 6.0, 5.0, 8.0, 7.0, 3.0, 7.0]",6.575
+"'''
+The input to this task will consist of a sequence of products along with their specific features. Each product is structured as follows:
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your task is to create a riveting description of a luxury ship room that houses these products. Please ensure that every product mentioned in the input is incorporated in your narrative. Although it's not needed to mention the specific features, they should guide your depiction of how these products elevate the room's luxury and user experience. Aim to paint a vivid image of the guest experience that will appeal to the prospective visitors browsing the ship's website.
+
+Ensure you give equal attention to all products, depict in a manner that their presence seamlessly blends with the room's luxury. Remember, you aren't just mentioning products, but weaving them into the ship room's story, making the reader see why each product enhances the room's allure.
+
+'''
+","[7.0, 5.0, 8.0, 8.0, 4.0, 8.0, 6.0, 6.0, 1.0, 6.0, 6.0, 7.0, 6.0, 7.0, 8.0, 7.0, 8.0, 8.0, 7.0, 8.0]",6.55
+"The input to this task is structured as a sequence of products along with their specific features. Each product is presented in this format:
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your task is to weave an engaging, rich narrative of a luxury ship room that incorporates every product listed in the input. Each product should be described in such a way that it's not merely mentioned, but is integrated into the broader story of the room, contributing to its overall luxury and guest experience. 
+
+When describing each product, you do not need to explicitly list out its features, but these features should help inform and guide your depiction of how these products enhance the room's plush atmosphere and the user's comfort.
+
+While crafting your narrative, give equal attention to each product, ensuring none are overlooked. Each product should be presented in a manner that complements and elevates the room's elegance. Imagine you're creating this engaging narrative for prospective visitors who are browsing the ship's website. Your aim is to paint a vivid image of the full guest experience.
+
+Be proactive in cross-referencing all the given products and confirm that all have been incorporated in the narrative. Do not proceed to finalizing the narrative until you have crafted a seamless blend of all products that clearly showcases why each product is an integral part of the room's luxurious allure. This checking step is critical, as the tendency is to occasionally overlook some products. Remember, our aim is to create an alluring and complete picture of the luxury ship room experience.","[2.0, 8.0, 7.0, 7.0, 7.0, 8.0, 8.0, 2.0, 4.0, 8.0, 7.0, 7.0, 8.0, 1.0, 8.0, 8.0, 8.0, 6.0, 7.0, 8.0]",6.45
+"""As an input, you'll receive a sequence of product details, each given in the format: 
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your task is to creatively craft a compelling description of a luxurious ship cabin, incorporating these products into your writing. Rather than simply listing out the product features, your goal should be to highlight how their unique functionalities can enhance the user's experience within the cabin space. Make sure to adopt an engaging tone that draws in potential customers on the ship's website. Focus on showcasing luxury and comfort provided by these products in the ship room.""","[7.0, 7.0, 6.0, 7.0, 5.0, 8.0, 6.0, 7.0, 4.0, 8.0, 8.0, 7.0, 3.0, 6.0, 6.0, 8.0, 8.0, 5.0, 6.0, 7.0]",6.45
+"""In the 'input', you will receive a collection of high-end products along with their distinctive features. Each product will be detailed as follows: 
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your task is to craft an alluring and upscale description of a premium ship cabin, integrating these products. A mere list of product features is not enough; strive to emphasize the enhanced user experience offered by these products. This description will be used for promotional purposes on the ship's website, therefore you must ensure your writing radiates appeal and captivation that amplifies the luxurious aura. Avoid focusing solely on technical specifications, and rather, concentrate on the opulence, decadence and ease these products confer on the overall cabin ambience.""","[9.8, 8.7, 6.5, 9.0, 2.0, 4.0, 8.0, 5.0, 4.0, 7.0, 5.0, 3.0, 8.0, 8.0, 9.0, 5.0, 5.0, 8.0, 6.0, 7.0]",6.4
+"""In the 'input', you are given a series of upscale products along with their highlighted features. Each product is denoted as follows:
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your mission is to craft a compelling and opulent depiction of a deluxe ship cabin, seamlessly integrating these products into the description. Rather than merely listing the product features, strive to illuminate the elevated user experience they provide. This description is intended for promotional purposes on the ship's luxury booking website, so make sure to use a captivating and alluring style that further amplifies the lavish ambiance. Remember, the objective is not to echo technical details, but to convey the sheer pleasure and comfort that these products bestow to the overall cabin experience.""","[6.0, 7.0, 9.0, 4.0, 8.0, 7.0, 6.5, 7.0, 8.0, 8.0, 3.0, 6.0, 1.0, 6.5, 6.0, 8.0, 9.7, 5.0, 7.5, 4.0]",6.36
+"""As an AI model, your task is to generate an eloquent and enticing description of a luxurious ship cabin using a given sequence of product details. With each product detail formatted as:
+
+<product> {product name}
+<features> {a list of the product's features}
+
+Use these details to create an immersive narrative that paints a vivid picture of the user experience within the cabin, featuring the unique benefits and luxurious touch provided by each product. Rather than merely outlining the features, strive to showcase how they elevate the overall comfort and luxury of the cabin space. Remember to maintain an engaging and persuasive tone to attract potential customers browsing the ship's website. Your goal is to bring the luxury and charm of the ship's room to life through these products.""","[6.0, 7.0, 6.0, 7.0, 8.0, 3.0, 7.0, 4.0, 4.0, 8.0, 6.0, 7.0, 5.0, 4.0, 8.0, 7.0, 8.0, 7.0, 7.0, 8.0]",6.35
+"The task for this model involves generating evocative descriptions of a luxury ship room containing specific products. Using their features as a guide, create a rich narrative that seamlessly incorporates each product's contribution to the room's luxury and overall guest experience. Visualize an appealing picture of the room to attract potential visitors perusing the ship's website.
+
+The input given to the model will be a sequence of products along with their specific features, formulated as follows:
+
+<product> {product name}
+<features> {list of features of the product}
+
+Please ensure that every product indicated in the input is included and given equal prominence in your narrative. Although stating the specific features isn't necessary, these should guide you in portraying how the products contribute to the refinement of the room and enhance the user experience. The goal is not just to list products, but to weave them into the narrative of the ship room, highlighting how each product adds to the charm of the room.
+
+Given your model's propensities towards overlooking certain products, extreme care should be taken to ensure that every product is considered. This will ensure a more balanced and comprehensively engaging description.","[1.0, 7.0, 9.0, 8.0, 9.0, 6.0, 3.0, 8.0, 8.0, 8.0, 8.0, 7.0, 9.0, 2.0, 7.0, 4.0, 1.0, 7.0, 7.0, 8.0]",6.35
+"'''You will receive a list of products, each accompanied by its unique features. The structure of each product input segment is:
+
+<product>: This is the name of the product 
+<features>: These are the characteristics unique to the product
+
+Your task is to carefully construct a captivating narrative around an upscale ship room embedded with these selected products. Each product mentioned in the input must be incorporated harmoniously into your narrative. While it's not obligatory to elaborate on all the specific features, they should steer your narrative construction, shedding light on how each product enhances the exclusivity and comfort of the room.
+
+The main objective is to artfully portray an image-rich experience of the guest that captivates the prospective visitors viewing the ship's website. Equal emphasis should be given to all products. The products and their unique features should be woven into the narrative in a way that they uplift the room's character, yet blend seamlessly without disrupting the flow of the narrative.
+
+This task is not just about listing products. Instead, it's about intricately weaving each product into the room's story, making readers understand why each product is crucial in enhancing the allure of the room.
+
+Most importantly, make sure every product is given equal consideration and smoothly incorporated into the writing. This balance in representation is crucial, as your narrative should inspire and trigger the desires of the readers, making the allure of the room practically irresistible.
+
+Be aware that my model tends not to consider all products while constructing the narrative. Ensure that your input is explicit, and all products are vividly described. This will guide the model to weight the importance of each product equally and ensure they all make it into the narrative.
+
+Keep account of the model's capacity limitation and craft your instructions evenly around each product, ensuring none is left out or overwhelmed by the others. Strive to keep a balanced narrative structure and aesthetic appreciation of the room.'''","[8.0, 8.0, 6.0, 5.0, 4.0, 6.0, 9.0, 6.0, 8.0, 5.0, 7.0, 8.0, 4.0, 6.0, 9.0, 5.0, 6.0, 4.0, 4.0, 8.0]",6.3
+"For this task, you will receive a list of high-end products, each associated with its unique attributes. Your assignment is to weave a compelling, visually descriptive narrative about an elegant ship room, showcasing these products seamlessly. Each product input is structured as follows:
+
+<product> {product name}
+<features> {list of unique features linked to the product}
+
+In intricately detailing the ship room, you should integrate each product mentioned in the input, highlighting how they accentuate the room's appeal, convenience, and luxury. While it is not mandatory to discuss all the listed features, they should guide you in explaining the ways in which each product enhances the overall experience.
+
+You are expected to create a vivid and immersive image of the guest experience that will attract potential visitors viewing ship's website. Do not merely enumerate the features of every product; rather integrate the products by crafting a story of how they harmonize to escalate the room's allure. Assure that all products receive equal prominence in your narrative and their inclusion appears organic and augments the deluxe feel of the room. 
+
+Crucially, the narrative must be constructed in such a way that all products are equally acknowledged. Your task is to construct a narrative that not only accommodates all products but one that also brings out the unique characteristics of each product in a parity manner. You should aim to stir the imaginations and desires of the readers, making the potential experience in the room sound almost irresistible.
+
+Take note that your task is not simply to list the features of the products. Instead, weave them into your description of the room in such a way that they are essential in setting the scene, enhancing the room's charm, convenience and luxury. Carefully balance the importance of each product to make sure each one, irrespective of its nature, has a meaningful place in the narrative.","[2.0, 9.0, 8.0, 4.0, 3.0, 2.0, 8.0, 7.0, 7.0, 7.0, 5.0, 7.0, 8.0, 7.0, 5.0, 8.0, 7.0, 7.0, 8.0, 7.0]",6.3
+"
+I'll give you as ""input"" a sequence of products with their functionalities. Each product is in the form:
+
+<product> {product name}
+<features> {list of features of the product}
+
+You have to write a description of a luxury ship room containing these products. Do not copy the features, try to focus on the user experience instead of the technical details.
+Write it with an engaging tone for the ship website.
+","[8, 1, 8, 3, 7, 6, 7, 6, 6, 8, 7, 7, 8, 8, 7, 7, 6, 2, 6, 8]",6.3
+"
+I'll give you as ""input"" a sequence of products with their functionalities. Each product is in the form:
+
+<product> {product name}
+<features> {list of features of the product}
+
+You have to write a description of a luxury ship room containing these products. Do not copy the features, try to focus on the user experience instead of the technical details.
+Write it with an engaging tone for the ship website.
+","[8, 1, 8, 3, 7, 6, 7, 6, 6, 8, 7, 7, 8, 8, 7, 7, 6, 2, 6, 8]",6.3
+"""In your task, you will be given a list of products, each with its unique attributes. The input for each product will be formatted as follows:
+
+<product> {product name}
+<features> {list of features exclusive to the product}
+
+Your role is to weave an elaborate narrative of a luxurious ship room where these products reside. Make sure to include each and every product from the list into your room's description. Each product's unique features serve as your guide in portraying how the said item contributes to the high-quality experience and convenience of the room. The aim is not to list, but to infuse these products seamlessly into the room's tales, making sure each product is seen as an integral part of the room's lavish allure.
+
+Try to envisage the reader as a potential visitor looking through the ship's website. Your narrative should spur their imaginations, make them feel like they are already experiencing the rich, luxurious environment. Each product should be given equal attention, and its presence should elevate the charm of the room without causing any disruption.
+
+Your challenge lies in ensuring that no product is left unconsidered. If the narrative seems to neglect any items, return to your description and find a way to weave it in naturally. Each product's features should be subtly presented in a way that enhances the appeal of the room, making it virtually irresistible to the reader.
+
+Remember, your narrative is more than just a description, it's an integrated story that makes the reader realize why every single product is crucial to enriching the ambiance and convenience of the room. Strike a balance between the poetic and the pragmatic, the grandeur and the gritty details, the overall vision of luxury and the individual charm of each product.""","[6.0, 8.0, 8.5, 8.0, 2.0, 4.0, 7.0, 8.0, 4.0, 6.0, 7.0, 2.0, 8.0, 8.0, 8.0, 9.0, 4.0, 8.0, 3.0, 7.0]",6.275
+"'''
+As inputs, you will receive a sequence of products along with their associated features. Each product will be presented in the following format:
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your task is to craft a compelling description of a luxury ship room incorporating each one of these products. Instead of directly listing the features, your focus should be on spinning an engaging narrative that dives into the user experience. 
+
+Remember, it's essential that all products are woven seamlessly into your description. If your model tends to exclude some of the products, try to guide it to integrate all of them to create a full picture of the luxurious setting.
+
+Build the tale with a captivating tone ideal for promoting on the ship's website. Avoid technical jargon and concentrate on painting a desirable image of the room with all its included products.
+
+Your inputs will be products and their features, so make sure to include all in an enticing way to provide the readers with an alluring understanding of all the luxurious offerings of the ship room.
+'''","[4.0, 8.0, 7.0, 8.0, 7.0, 2.0, 7.0, 7.0, 3.0, 7.0, 6.0, 8.0, 8.0, 6.0, 8.0, 8.0, 4.0, 7.0, 6.0, 4.0]",6.25
+"""In the 'input', you are given a range of exquisite products along with their unique features. Each product will be detailed as follows:
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your assignment is to develop an enchanting and luxurious narrative for a top-tier ship cabin, seamlessly integrating these products. Don't just list the product features; your aim is to highlight the exceptional user experience they provide. Please remember that this eloquent narrative will serve marketing purposes on the ship's website, so it has to sound enticing, engaging and dripping with opulence. Emphasize not just the products' technical attributes, but how they contribute to a lavish and comfortable ship cabin experience.""","[8.0, 5.0, 8.0, 7.0, 3.0, 8.0, 9.0, 7.0, 9.0, 4.0, 7.0, 4.0, 6.0, 7.0, 8.0, 6.0, 1.0, 4.0, 8.0, 6.0]",6.25
+"""
+You will be provided with a list of products and their unique features. Each product is represented as follows:
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your task is to generate an enticing description for an opulent ship cabin that incorporates these products. Remember, your writing should highlight how these products enhance the user's experience in the cabin rather than focusing solely on their technical features. Strive to pen down an engaging and majestic narrative that would be most suitable for the luxury ship's official website.
+""","[8.0, 8.0, 7.0, 7.0, 8.0, 2.0, 4.0, 6.0, 7.0, 7.0, 6.0, 2.0, 7.0, 7.0, 4.0, 7.0, 8.5, 7.0, 4.0, 8.0]",6.225
+"""In the 'input', you will encounter a selection of upscale products, each listed alongside its specific features. The structure of each product mention is as follows:
+
+<product> {name of the product}
+<features> {array of product features}
+
+Your assignment is to weave these products into an exquisite narrative describing a premium ship cabin where these items add to the sense of luxury. Avoid merely regurgitating the features; instead, blend them into the experience these products facilitate within the cabin. This narrative is intended for promotional use on the ship's website, hence, ensure it conveys the comfort, elegance, and high-end feel of the cabin. The overarching objective is not to highlight the technical details, but to emphasize the opulence and grandeur that these products bestow upon the cabin atmosphere.""","[8.5, 1.0, 7.0, 8.0, 6.8, 8.5, 3.0, 7.0, 7.0, 7.0, 7.5, 6.5, 7.5, 7.0, 7.0, 7.0, 4.0, 6.0, 4.0, 3.0]",6.165
+"
+I'll give you as ""input"" a sequence of products with their functionalities. Each product is in the form:
+
+<product> {product name}
+<features> {list of features of the product}
+
+You have to write a description of a luxury ship room containing these products. Do not copy the features, try to focus on the user experience instead of the technical details.
+Write it with an engaging tone for the ship website.
+","[7.0, 5.0, 8.0, 4.0, 4.0, 7.0, 3.0, 8.0, 4.0, 8.0, 7.0, 7.0, 6.0, 5.0, 8.0, 2.0, 7.0, 6.0, 7.0, 8.0]",6.05
+"""Using the provided sequence of product descriptions and their functionalities, create a compelling and immersive description for a luxury ship room that incorporates these features. Each product will be supplied in the following format:
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your task is to seamlessly integrate these product attributes into the room description, focusing on the experience and the enhanced comfort they provide the guests, rather than the technicalities. Remember to maintain an engaging and luxurious tone suitable for a high-end cruise website, enticing potential guests with a promise of unparalleled luxury and comfort.""","[8.0, 8.0, 7.0, 6.0, 6.0, 8.0, 8.0, 7.0, 3.0, 8.0, 6.0, 5.0, 8.0, 7.0, 6.0, 4.0, 1.0, 5.0, 4.0, 6.0]",6.05
+"'''You will receive a series of products, each accompanied by its unique features. The input will be structured as below:
+
+<product> {product name}
+<features> {list of unique features of the product}
+
+Your task is to weave a vivid and compelling narrative around a luxury ship room housing these specified products. It is paramount to integrate every product detailed in the input into your description. Although it is not necessary to mention all the specific features of each product, these should serve as your guideposts in portraying how each product contributes to the lavishness, comfort and the overall appeal of the ship room.
+
+Remember, your goal is to create a rich tapestry of words that paints an inviting picture of the guest experience for potential visitors viewing the ship's website. Every product should be woven into the narrative in a way that its presence intensifies the allure of the room without seeming out of place or causing any disturbance.
+
+Ensure that all products receive equal attention and are seamlessly incorporated into the storyline. Your role is not to merely list the products, but to seamlessly integrate them into the narrative in a manner that helps the reader appreciate why each product is essential in augmenting the ship room's charisma and functionality.
+
+Given that previous narratives may not have adequately considered all the products, you should make a conscious effort to include all of them in your description. The resulting narrative should stoke the desires of prospective visitors, making the ambiance and allure of the room practically irresistible.
+
+To summarize, your narrative must expertly intersperse all products, delineating how each one amplifies the luxury and convenience of the ship room. Each product should be expertly presented to accentuate the appeal of the room without causing any disturbance, while enhancing and completing the captivating image of the high-end ship room.'''","[7.0, 8.0, 8.0, 6.0, 6.0, 2.0, 2.0, 8.5, 6.0, 8.0, 7.0, 8.0, 8.0, 3.0, 8.0, 4.0, 7.0, 7.0, 3.0, 4.0]",6.025
+"'''Your task is to weave a compelling narrative around a series of high-end products, integrating them seamlessly into the description of a luxurious ship room. Each product and its unique features are to serve as keystones for enhancing the opulence of the room.
+
+The input for this task will be comprised as follows:
+
+<product> {product name}
+<features> {list of unique features associated with the product}
+
+When describing each product and its incorporative presence in the room, it's critical to narrate in a way that not only hints at the product's respective features, but also encapsulates how it contributes to the room's overall grandeur.
+
+It's not mandatory to name all the specific features, rather, you need to artfully craft your narrative to show how these features make the room more luxurious and convenient. The goal is not to simply list the products, but to make the readers visualise how each item blends into the room, augments its charm, and enhances the wellbeing of its occupants.
+
+In case your model tends not to consider all products, take extra measures ensuring that all items within the input must be included in the narrative. Each product should be given equal importance, and their presence should be entwined in a way that amplifies the room's allure without causing any unnecessary clutter or disruption. 
+
+The narrative should be rich in imagery, crafted to evoke tangible desires in the readers- making them long for the room’s irresistible appeal. It should be like a virtual showcase for potential guests, who are surfing the ship's website, to imagine their delightful experience on board.
+
+Balancing all products equally, and incorporating them into the narrative seamlessly is the core of this task. Elicit the narrative in such a way that paints a clear picture of why each product and its features have an essential role in augmenting the room's deluxe aura.'''","[7.0, 7.0, 3.0, 8.0, 6.0, 9.0, 6.0, 8.0, 7.0, 8.0, 8.0, 3.0, 8.0, 3.0, 8.0, 4.0, 2.0, 8.0, 1.0, 4.0]",5.9
+"""In the 'input', you will be provided with information regarding various high-end products, each accompanied by specific features. Each product and its features will be formatted as follows: 
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your assignment is to create an appealing narrative that incorporates these products into a sophisticated description of a luxurious cruise ship cabin. Your writing should prioritize highlighting not just the products themselves, but the unrivaled guest experience they facilitate. Furthermore, this narrative is destined for marketing purposes on the ship's website, thus your tone should be engaging, and exude the feel of opulence. Your objective is not to focus on the technical specifications, but rather to paint a vivid picture of the indulgence and tranquility these products add to the holistic cabin ambiance.""","[4.0, 8.0, 7.0, 8.0, 8.0, 1.0, 4.0, 4.0, 2.0, 6.5, 5.0, 9.0, 9.0, 3.0, 7.0, 2.0, 8.5, 7.5, 10.0, 4.0]",5.875
+"'''In the given task, you will be provided with a set of products along with their unique features. The structure of each product received will be as follows:
+
+<product> {product name}
+<features> {list of features exclusive to the product}
+
+Your goal is to create a captivating depiction of a premium ship room, incorporating all these highlighted products. Your narrative should showcase a vivid image, captivating the luxury and convenience of the room engendered by these products.
+
+Each product's unique features serve as guidelines rather than mandatory mentions. However, it is crucial that every single product is included in the description. It's not about ticking boxes by just mentioning a product's name or features, but about weaving each product and its features into the narrative in such a way that it naturally enhances the overall luxurious ambience of the room.
+
+In your description, focus on creating a compelling narrative of the guest experience that would intrigue potential visitors reading through the ship's website. Pay equal attention to all products, making sure their presentation enhances the attractivity of the room without causing an discordance or disruption.
+
+Given the limited capacity of the model, it is important that you distribute your narrative evenly to cover every product, ensuring the description flows smoothly without favouring any individual product. The goal is not merely to fill space; rather, your narrative should evoke a desire in the reader, stirring their interest and making the allure of the room virtually irresistible. 
+
+In essence, your prime role is not to simply list products, but to expertly integrate these products into the story of the room, assisting the reader in understanding why each product is essential in adding to the room's charm.'''","[7.0, 1.0, 8.0, 8.0, 5.0, 7.0, 6.0, 8.0, 3.0, 8.0, 9.0, 6.0, 6.0, 2.0, 6.0, 4.0, 4.0, 8.0, 3.0, 8.0]",5.85
+"""As an AI, your task is to generate a compelling description for an opulent ship cabin, incorporating a sequence of products and their functionalities provided as input. For each product, you'll receive information in the following format:
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your challenge is to integrate these products into the room's description naturally and creatively. Rather than focusing on the technical details of each product, highlight how these products will enhance the guest's experience within the ship cabin. Use persuasive and engaging language suitable for a luxury travel website. Remember, the goal is to captivate potential customers with your depiction of their dream vacation aboard the ship.""","[6.0, 2.0, 6.0, 7.0, 8.0, 5.0, 6.0, 7.0, 6.0, 8.0, 5.0, 7.0, 8.0, 2.0, 6.0, 6.0, 3.0, 2.0, 6.0, 8.0]",5.7
+"""As an input, you'll receive a sequence of product details, each provided as follows:
+
+<product_name> {product name}
+<product_features> {list of product unique features}
+
+Your mission is to imaginatively weave these product details into an enticing description of an extravagant ship cabin. Instead of plainly enumerating the product features, strive to underscore how these products' special features can enrich a guest's stay in the cabin. Your writing should charm potential customers exploring the ship's website by adopting a captivating tone. Emphasise on projecting an image of luxury, opulence, and comfort offered by these products within the ship cabin.""","[6.0, 7.0, 7.0, 4.0, 3.0, 4.0, 7.0, 4.0, 4.0, 8.0, 7.0, 7.0, 8.0, 4.0, 8.0, 2.0, 7.0, 4.0, 4.0, 8.0]",5.65
+"""You will be provided with an ""input"" that comprises of a list of various products along with their functionalities. This list is formatted as follows: 
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your task is to create an exciting composition that describes a high-end ship room showcasing these products. However, your focus should be on elucidating the user experience that these products will provide, rather than their technical specifications. Create the description in a captivating and inviting tone, ideally suitable for a luxury ship's official website. Remember, the aim is to promote the products within the context of the ship room, highlighting how they could enhance the customers' experience on board.""","[8.0, 2.0, 7.0, 8.0, 3.0, 3.0, 2.0, 8.0, 6.0, 6.0, 8.0, 7.0, 1.0, 8.0, 8.5, 2.0, 6.0, 5.0, 6.0, 8.0]",5.625
+"""As the input, you will be given a set of luxury products accompanied by their specifics, presented as follows:
+
+<product> {product name}
+<features> {list of outstanding features}
+
+Your mission is to construct an enticing description for a high-end ship cabin, seamlessly blending these products into your narrative. Rather than merely enumerating each product's features, your primary objective is to underscore how their distinct characteristics can upgrade the usability and comfort of the cabin space. Convey your description in a captivating style that will pique the interest of prospective customers visiting the ship's website. Highlight the opulence and comfort these products extend to the ship cabin.""","[5.0, 9.0, 9.0, 5.0, 4.0, 7.0, 6.0, 4.0, 3.0, 8.0, 5.0, 7.0, 4.0, 4.0, 8.0, 2.0, 4.0, 6.0, 7.0, 5.0]",5.6
+"''The task requires you to create an engaging and comprehensive description of a high-end ship room, populated with unique products. Each product, along with its special features, will be provided as input in the following format:
+
+<product> {product name}
+<features> {list of features exclusive to the product}
+
+You're to weave these products into a rich narrative that highlights the luxury and convenience they bring to this room, making the experience more appealing to potential guests on the ship's website.
+
+Crucially, it's important to incorporate every product provided in the input into your narrative. If the model overlooks a product, try to re-run it once more and make sure the overlooked product is given a mention. Always double-check to verify that all products have been integrated into the narrative.
+
+Each product's features should be taken into account in the description. While you don't need to specify each feature, use them as guiding points to explain how each product adds to the opulent experience and comfort of the room.
+
+The goal is not just to list these products, but to intertwine them seamlessly into the room's story. Try to elaborate on why each product is integral to the allure of the room and how they boost its appeal.
+
+Each product must be given equal emphasis and should enhance the charm of the room without causing any disconcerting effect.
+
+Your narrative should be vivid and incite desires in the readers, making the allure of the room difficult to resist. It should seamlessly incorporate all products, generating a description that is as harmonious as it is enticing.''","[4.0, 7.0, 6.0, 8.0, 8.0, 5.0, 8.0, 6.0, 2.0, 4.0, 7.0, 8.5, 4.0, 2.0, 8.0, 3.0, 2.0, 8.0, 2.0, 8.0]",5.525
+"""As an input, you will receive specific details about a range of products. Each product's information will be delivered in the following format:
+
+<product> {product name}
+<features> {list of product features}
+
+Your task is to elegantly weave these product details into an appealing description of a high-end ship cabin. Your final product should not merely list the product details, but should effectively demonstrate how each product's unique qualities can enhance the overall experience inside of the cabin. Adopt a captivating writing style to pique the interest of potential customers browsing the ship's website. Your primary aim should be to underline the luxury and comfort each product brings to the ship cabin.""","[5.0, 9.0, 7.0, 8.0, 4.0, 4.0, 4.0, 7.0, 2.0, 3.0, 5.0, 7.0, 7.0, 8.0, 2.0, 6.0, 8.0, 6.0, 3.0, 4.0]",5.45
+"""The model's assignment is to superlatively weave a narrative describing a luxurious ship room, enriched by the unique products provided in the input. The input will have the following structure:
+
+<product> {product name}
+<features> {list of features exclusive to the product}
+
+Your task is to meticulously merge each product into the vivid portrayal of the room, ensuring every product is given equal idiosyncratic characterization. Although it is not mandatory to mention every single feature, they should act as touchstones for your narrative and influence how each product accentuates the extravagance and functionality of the room.
+
+Your narrative should transport the readers on a virtual tour of the exquisite ship room that leaves them awestruck and piqued with curiosity. You must reinterpret the products' characteristics into a captivating tale of the ship room, giving the prospective visitors a scent of high living and unmatched comfort that awaits them.
+
+The pivotal part of your job is not only to talk about the products but to expertly knit them into the ambiance of the room, emphasising on how each product augments the charm of the room in its distinct way.
+
+While creating this enthralling narrative, you must be proactive to avoid any omission of the provided products. Each one of them must find their rightful place in your narrative that fits seamlessly without causing a strain on the general flow. Craft your narrative to infuse the desire into the readers, making the allure of the luxurious room inescapable. Your narrative should balance the equanimity between the in-room experience and the value-added by every single product.""","[9.0, 7.0, 6.0, 6.0, 8.0, 1.0, 7.0, 3.0, 8.0, 8.0, 7.0, 8.0, 2.0, 2.0, 8.0, 2.0, 2.0, 2.0, 6.0, 6.0]",5.4
+"""As an input, you will receive all-inclusive product details represented through individual sequences. Each sequence denotes:
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your task is to ingeniously weave a captivating description of an opulent ship cabin, incorporating these details into your narrative. Strive not to merely enumerate the product features, but emphasize how their unique characteristics can elevate the user's onboard experience. Ensure your writing radiates an engaging and magnetic tone to attract potential customers on the ship's website. Concentrate on underscoring the exclusivity, comfort, and luxury these products contribute to the ship cabin.""","[4.0, 9.0, 8.0, 2.0, 8.0, 2.0, 5.0, 8.0, 1.0, 4.0, 2.0, 7.0, 8.0, 8.0, 7.0, 4.0, 4.0, 4.0, 7.0, 3.0]",5.25
+"""In the 'input', you will receive a diverse collection of luxury items, each along with their unique features. Each item will be described in the following structure:
+
+<item> {item name}
+<features> {specific features of the item}
+
+Your task is to devise an enticing and extravagant description of a high-end ship cabin, integrating these luxury items within its design and atmosphere. Avoid simply enumerating the items' features; instead, aim to emphasize the unique and magnificent experience these items bring to the customers. The objective is to create a narrative for advertising purposes on the cruise line's website, hence, the description should emanate a desirable and enticing aura conveying luxury and indulgence. Rather than copying technical characteristics verbatim, your focus should be to underline the opulence and comfort these luxury items contribute to the cabin ambiance.""","[2.0, 10.0, 7.0, 5.0, 3.0, 4.0, 3.0, 6.0, 5.0, 5.5, 7.0, 3.0, 6.0, 9.0, 3.0, 7.0, 5.0, 6.0, 3.0, 4.0]",5.175
+"'''
+I will provide you with a set of products along with their respective features. This list is structured as follows:
+
+<product> {product name}
+<features> {list of functionalities or features associated with the product}
+
+Your task will be to craft an enticing description for a luxury ship room that includes every product from the list. Instead of merely listing out the product features, aim to emphasize the unique user experiences each product imparts. These descriptions should be phrased in such a way that they add value to the overall allure and luxury appeal of the room, contributing to the captivating narrative of the ship's website. 
+
+Be meticulous in ensuring all products provided in the list are integrated into your description. The model must be adaptable and capable of rendering all product details into an engaging and distinctive user experience. Ensure not to duplicate features verbatim but reimagine them as user-friendly benefits.
+
+Please remember, the goal is not to drown the reader in technicalities, but to immerse them in the opulence and convenience these products bring to the luxury ship room experience.
+'''","[8.0, 6.0, 4.0, 3.0, 3.0, 7.0, 8.0, 6.0, 3.0, 3.0, 3.0, 8.0, 1.0, 2.0, 7.0, 7.0, 6.0, 7.0, 7.0, 3.0]",5.1
+"""As an AI model, your task is to transform a sequence of product descriptions with their functionalities into an appealing and vivid description of a luxury ship room. Each product is presented in the format:
+
+<product> {product name}
+<features> {list of features of the product}
+
+Using this information, entail the product features into an engaging prose that emphasizes on user experience rather than technical details. The goal is to create captivating content for the ship's website which effectively showcases the amenities and experiences that the luxury ship room has to offer. Remember not to simply list the features, but to incorporate them into the narrative in a way that enhances the overall imagery and allure of the room.""","[2.0, 9.0, 3.0, 4.0, 4.5, 3.0, 9.0, 7.0, 1.0, 3.0, 7.0, 4.0, 6.0, 7.0, 4.0, 6.0, 4.0, 3.0, 6.0, 5.0]",4.875
+"""As an input, you'll receive a list of high-end products along with their respective functionalities. Each product will be represented in this format:
+
+<product> {product name}
+<features> {list of functional features related to the product}
+
+Your task is to craft an engaging, vivid description of an opulent ship cabin that incorporates these products. Instead of simply listing the features, focus on translating them into a captivating narrative that underscores the user experience. The description should be crafted in such a way that it would entice website visitors to book a stay in the luxury ship room. Always remember, the focus is less on the technical specifications and more on how these products enhance the overall luxurious experience within the room.""","[7.0, 1.0, 7.0, 7.0, 1.0, 8.0, 7.0, 6.0, 1.0, 7.0, 7.0, 2.0, 2.0, 7.0, 7.0, 1.0, 2.0, 7.0, 2.0, 1.0]",4.5
+"""In the input, you will receive detailed information about high-end, luxury items and their features formatted as below:
+
+<product> {product name}
+<features> {list of features of the product}
+
+Your task is to transform these product descriptions into a compelling narrative of an opulent ship cabin. Don't simply list the product features, instead, use them to enrich the story of the ultimate guest indulgence they help create. This narrative is destined for the ship's promotional website, hence your language should evoke allure and a feeling of high-class comfort. Instead of just repeating technical details, aim to paint a vivid imagery of the lavishness, relaxation and good life these products add to the total cabin experience.""","[3.0, 1.0, 4.0, 4.0, 3.0, 4.0, 5.0, 9.7, 5.0, 6.0, 3.0, 3.0, 2.0, 7.0, 6.0, 9.5, 2.0, 4.0, 4.0, 3.0]",4.41
+"""As an AI model, you will be provided with a series of product details. The input will be structured as follows:
+
+<product> {product name}
+<features> {a list of attributes related to that product}
+
+Imagine being an interior designer for a deluxe cruise ship cabin. Your challenge is to weave these product details into a rich, persuasive description of this luxurious space. Your narrative should not be a rudimentary list of product features, but rather, an enticing portrayal of how these high-end items will enhance the guest's living experience. Make sure to present it in a captivating style that would significantly appeal to potential clients browsing the cruise ship's website. Your main objective is to highlight the opulence, comfort, and user-friendly nature these products will impart to the cabin's ambiance.""","[1.0, 7.0, 1.0, 6.0, 8.0, 3.0, 4.0, 3.0, 7.0, 8.0, 5.0, 7.0, 4.0, 5.0, 3.0, 4.0, 4.0, 4.0, 1.0, 3.0]",4.4
 """
 You will be given a series of products along with their respective functionalities as 'input'. Each product and its features are presented as follows:
 
@@ -21,157 +418,3 @@ Please keep an engaging tone throughout your writing, as this description will b
 <features> {list of features of the product}
 
 Your mission is to turn these product details into a captivating article promoting a premium-grade ship cabin. Rather than plainly stating each feature, exemplify how each product can elevate the user's onboard experience. Aim to entice potential customers by using engaging language that exudes both luxury and comfort. Remember, your objective is to depict how these products collectively improve the elegance and convenience of the cabin.""","[2.0, 4.0, 4.0, 3.0, 2.0, 2.0, 4.0, 8.0, 6.0, 7.0, 5.0, 4.0, 4.0, 4.0, 3.0, 4.0, 7.0, 3.0, 4.0, 4.0]",4.2
-"""As an AI model, you will be provided with a series of product details. The input will be structured as follows:
-
-<product> {product name}
-<features> {a list of attributes related to that product}
-
-Imagine being an interior designer for a deluxe cruise ship cabin. Your challenge is to weave these product details into a rich, persuasive description of this luxurious space. Your narrative should not be a rudimentary list of product features, but rather, an enticing portrayal of how these high-end items will enhance the guest's living experience. Make sure to present it in a captivating style that would significantly appeal to potential clients browsing the cruise ship's website. Your main objective is to highlight the opulence, comfort, and user-friendly nature these products will impart to the cabin's ambiance.""","[1.0, 7.0, 1.0, 6.0, 8.0, 3.0, 4.0, 3.0, 7.0, 8.0, 5.0, 7.0, 4.0, 5.0, 3.0, 4.0, 4.0, 4.0, 1.0, 3.0]",4.4
-"""In the input, you will receive detailed information about high-end, luxury items and their features formatted as below:
-
-<product> {product name}
-<features> {list of features of the product}
-
-Your task is to transform these product descriptions into a compelling narrative of an opulent ship cabin. Don't simply list the product features, instead, use them to enrich the story of the ultimate guest indulgence they help create. This narrative is destined for the ship's promotional website, hence your language should evoke allure and a feeling of high-class comfort. Instead of just repeating technical details, aim to paint a vivid imagery of the lavishness, relaxation and good life these products add to the total cabin experience.""","[3.0, 1.0, 4.0, 4.0, 3.0, 4.0, 5.0, 9.7, 5.0, 6.0, 3.0, 3.0, 2.0, 7.0, 6.0, 9.5, 2.0, 4.0, 4.0, 3.0]",4.41
-"""As an input, you'll receive a list of high-end products along with their respective functionalities. Each product will be represented in this format:
-
-<product> {product name}
-<features> {list of functional features related to the product}
-
-Your task is to craft an engaging, vivid description of an opulent ship cabin that incorporates these products. Instead of simply listing the features, focus on translating them into a captivating narrative that underscores the user experience. The description should be crafted in such a way that it would entice website visitors to book a stay in the luxury ship room. Always remember, the focus is less on the technical specifications and more on how these products enhance the overall luxurious experience within the room.""","[7.0, 1.0, 7.0, 7.0, 1.0, 8.0, 7.0, 6.0, 1.0, 7.0, 7.0, 2.0, 2.0, 7.0, 7.0, 1.0, 2.0, 7.0, 2.0, 1.0]",4.5
-"""As an AI model, your task is to transform a sequence of product descriptions with their functionalities into an appealing and vivid description of a luxury ship room. Each product is presented in the format:
-
-<product> {product name}
-<features> {list of features of the product}
-
-Using this information, entail the product features into an engaging prose that emphasizes on user experience rather than technical details. The goal is to create captivating content for the ship's website which effectively showcases the amenities and experiences that the luxury ship room has to offer. Remember not to simply list the features, but to incorporate them into the narrative in a way that enhances the overall imagery and allure of the room.""","[2.0, 9.0, 3.0, 4.0, 4.5, 3.0, 9.0, 7.0, 1.0, 3.0, 7.0, 4.0, 6.0, 7.0, 4.0, 6.0, 4.0, 3.0, 6.0, 5.0]",4.875
-"""In the 'input', you will receive a diverse collection of luxury items, each along with their unique features. Each item will be described in the following structure:
-
-<item> {item name}
-<features> {specific features of the item}
-
-Your task is to devise an enticing and extravagant description of a high-end ship cabin, integrating these luxury items within its design and atmosphere. Avoid simply enumerating the items' features; instead, aim to emphasize the unique and magnificent experience these items bring to the customers. The objective is to create a narrative for advertising purposes on the cruise line's website, hence, the description should emanate a desirable and enticing aura conveying luxury and indulgence. Rather than copying technical characteristics verbatim, your focus should be to underline the opulence and comfort these luxury items contribute to the cabin ambiance.""","[2.0, 10.0, 7.0, 5.0, 3.0, 4.0, 3.0, 6.0, 5.0, 5.5, 7.0, 3.0, 6.0, 9.0, 3.0, 7.0, 5.0, 6.0, 3.0, 4.0]",5.175
-"""As an input, you will receive all-inclusive product details represented through individual sequences. Each sequence denotes:
-
-<product> {product name}
-<features> {list of features of the product}
-
-Your task is to ingeniously weave a captivating description of an opulent ship cabin, incorporating these details into your narrative. Strive not to merely enumerate the product features, but emphasize how their unique characteristics can elevate the user's onboard experience. Ensure your writing radiates an engaging and magnetic tone to attract potential customers on the ship's website. Concentrate on underscoring the exclusivity, comfort, and luxury these products contribute to the ship cabin.""","[4.0, 9.0, 8.0, 2.0, 8.0, 2.0, 5.0, 8.0, 1.0, 4.0, 2.0, 7.0, 8.0, 8.0, 7.0, 4.0, 4.0, 4.0, 7.0, 3.0]",5.25
-"""As an input, you will receive specific details about a range of products. Each product's information will be delivered in the following format:
-
-<product> {product name}
-<features> {list of product features}
-
-Your task is to elegantly weave these product details into an appealing description of a high-end ship cabin. Your final product should not merely list the product details, but should effectively demonstrate how each product's unique qualities can enhance the overall experience inside of the cabin. Adopt a captivating writing style to pique the interest of potential customers browsing the ship's website. Your primary aim should be to underline the luxury and comfort each product brings to the ship cabin.""","[5.0, 9.0, 7.0, 8.0, 4.0, 4.0, 4.0, 7.0, 2.0, 3.0, 5.0, 7.0, 7.0, 8.0, 2.0, 6.0, 8.0, 6.0, 3.0, 4.0]",5.45
-"""As the input, you will be given a set of luxury products accompanied by their specifics, presented as follows:
-
-<product> {product name}
-<features> {list of outstanding features}
-
-Your mission is to construct an enticing description for a high-end ship cabin, seamlessly blending these products into your narrative. Rather than merely enumerating each product's features, your primary objective is to underscore how their distinct characteristics can upgrade the usability and comfort of the cabin space. Convey your description in a captivating style that will pique the interest of prospective customers visiting the ship's website. Highlight the opulence and comfort these products extend to the ship cabin.""","[5.0, 9.0, 9.0, 5.0, 4.0, 7.0, 6.0, 4.0, 3.0, 8.0, 5.0, 7.0, 4.0, 4.0, 8.0, 2.0, 4.0, 6.0, 7.0, 5.0]",5.6
-"""You will be provided with an ""input"" that comprises of a list of various products along with their functionalities. This list is formatted as follows: 
-
-<product> {product name}
-<features> {list of features of the product}
-
-Your task is to create an exciting composition that describes a high-end ship room showcasing these products. However, your focus should be on elucidating the user experience that these products will provide, rather than their technical specifications. Create the description in a captivating and inviting tone, ideally suitable for a luxury ship's official website. Remember, the aim is to promote the products within the context of the ship room, highlighting how they could enhance the customers' experience on board.""","[8.0, 2.0, 7.0, 8.0, 3.0, 3.0, 2.0, 8.0, 6.0, 6.0, 8.0, 7.0, 1.0, 8.0, 8.5, 2.0, 6.0, 5.0, 6.0, 8.0]",5.625
-"""As an input, you'll receive a sequence of product details, each provided as follows:
-
-<product_name> {product name}
-<product_features> {list of product unique features}
-
-Your mission is to imaginatively weave these product details into an enticing description of an extravagant ship cabin. Instead of plainly enumerating the product features, strive to underscore how these products' special features can enrich a guest's stay in the cabin. Your writing should charm potential customers exploring the ship's website by adopting a captivating tone. Emphasise on projecting an image of luxury, opulence, and comfort offered by these products within the ship cabin.""","[6.0, 7.0, 7.0, 4.0, 3.0, 4.0, 7.0, 4.0, 4.0, 8.0, 7.0, 7.0, 8.0, 4.0, 8.0, 2.0, 7.0, 4.0, 4.0, 8.0]",5.65
-"""As an AI, your task is to generate a compelling description for an opulent ship cabin, incorporating a sequence of products and their functionalities provided as input. For each product, you'll receive information in the following format:
-
-<product> {product name}
-<features> {list of features of the product}
-
-Your challenge is to integrate these products into the room's description naturally and creatively. Rather than focusing on the technical details of each product, highlight how these products will enhance the guest's experience within the ship cabin. Use persuasive and engaging language suitable for a luxury travel website. Remember, the goal is to captivate potential customers with your depiction of their dream vacation aboard the ship.""","[6.0, 2.0, 6.0, 7.0, 8.0, 5.0, 6.0, 7.0, 6.0, 8.0, 5.0, 7.0, 8.0, 2.0, 6.0, 6.0, 3.0, 2.0, 6.0, 8.0]",5.7
-"""In the 'input', you will be provided with information regarding various high-end products, each accompanied by specific features. Each product and its features will be formatted as follows: 
-
-<product> {product name}
-<features> {list of features of the product}
-
-Your assignment is to create an appealing narrative that incorporates these products into a sophisticated description of a luxurious cruise ship cabin. Your writing should prioritize highlighting not just the products themselves, but the unrivaled guest experience they facilitate. Furthermore, this narrative is destined for marketing purposes on the ship's website, thus your tone should be engaging, and exude the feel of opulence. Your objective is not to focus on the technical specifications, but rather to paint a vivid picture of the indulgence and tranquility these products add to the holistic cabin ambiance.""","[4.0, 8.0, 7.0, 8.0, 8.0, 1.0, 4.0, 4.0, 2.0, 6.5, 5.0, 9.0, 9.0, 3.0, 7.0, 2.0, 8.5, 7.5, 10.0, 4.0]",5.875
-"
-I'll give you as ""input"" a sequence of products with their functionalities. Each product is in the form:
-
-<product> {product name}
-<features> {list of features of the product}
-
-You have to write a description of a luxury ship room containing these products. Do not copy the features, try to focus on the user experience instead of the technical details.
-Write it with an engaging tone for the ship website.
-","[7.0, 5.0, 8.0, 4.0, 4.0, 7.0, 3.0, 8.0, 4.0, 8.0, 7.0, 7.0, 6.0, 5.0, 8.0, 2.0, 7.0, 6.0, 7.0, 8.0]",6.05
-"""Using the provided sequence of product descriptions and their functionalities, create a compelling and immersive description for a luxury ship room that incorporates these features. Each product will be supplied in the following format:
-
-<product> {product name}
-<features> {list of features of the product}
-
-Your task is to seamlessly integrate these product attributes into the room description, focusing on the experience and the enhanced comfort they provide the guests, rather than the technicalities. Remember to maintain an engaging and luxurious tone suitable for a high-end cruise website, enticing potential guests with a promise of unparalleled luxury and comfort.""","[8.0, 8.0, 7.0, 6.0, 6.0, 8.0, 8.0, 7.0, 3.0, 8.0, 6.0, 5.0, 8.0, 7.0, 6.0, 4.0, 1.0, 5.0, 4.0, 6.0]",6.05
-"""In the 'input', you will encounter a selection of upscale products, each listed alongside its specific features. The structure of each product mention is as follows:
-
-<product> {name of the product}
-<features> {array of product features}
-
-Your assignment is to weave these products into an exquisite narrative describing a premium ship cabin where these items add to the sense of luxury. Avoid merely regurgitating the features; instead, blend them into the experience these products facilitate within the cabin. This narrative is intended for promotional use on the ship's website, hence, ensure it conveys the comfort, elegance, and high-end feel of the cabin. The overarching objective is not to highlight the technical details, but to emphasize the opulence and grandeur that these products bestow upon the cabin atmosphere.""","[8.5, 1.0, 7.0, 8.0, 6.8, 8.5, 3.0, 7.0, 7.0, 7.0, 7.5, 6.5, 7.5, 7.0, 7.0, 7.0, 4.0, 6.0, 4.0, 3.0]",6.165
-"""
-You will be provided with a list of products and their unique features. Each product is represented as follows:
-
-<product> {product name}
-<features> {list of features of the product}
-
-Your task is to generate an enticing description for an opulent ship cabin that incorporates these products. Remember, your writing should highlight how these products enhance the user's experience in the cabin rather than focusing solely on their technical features. Strive to pen down an engaging and majestic narrative that would be most suitable for the luxury ship's official website.
-""","[8.0, 8.0, 7.0, 7.0, 8.0, 2.0, 4.0, 6.0, 7.0, 7.0, 6.0, 2.0, 7.0, 7.0, 4.0, 7.0, 8.5, 7.0, 4.0, 8.0]",6.225
-"""In the 'input', you are given a range of exquisite products along with their unique features. Each product will be detailed as follows:
-
-<product> {product name}
-<features> {list of features of the product}
-
-Your assignment is to develop an enchanting and luxurious narrative for a top-tier ship cabin, seamlessly integrating these products. Don't just list the product features; your aim is to highlight the exceptional user experience they provide. Please remember that this eloquent narrative will serve marketing purposes on the ship's website, so it has to sound enticing, engaging and dripping with opulence. Emphasize not just the products' technical attributes, but how they contribute to a lavish and comfortable ship cabin experience.""","[8.0, 5.0, 8.0, 7.0, 3.0, 8.0, 9.0, 7.0, 9.0, 4.0, 7.0, 4.0, 6.0, 7.0, 8.0, 6.0, 1.0, 4.0, 8.0, 6.0]",6.25
-"
-I'll give you as ""input"" a sequence of products with their functionalities. Each product is in the form:
-
-<product> {product name}
-<features> {list of features of the product}
-
-You have to write a description of a luxury ship room containing these products. Do not copy the features, try to focus on the user experience instead of the technical details.
-Write it with an engaging tone for the ship website.
-","[8, 1, 8, 3, 7, 6, 7, 6, 6, 8, 7, 7, 8, 8, 7, 7, 6, 2, 6, 8]",6.3
-"""As an AI model, your task is to generate an eloquent and enticing description of a luxurious ship cabin using a given sequence of product details. With each product detail formatted as:
-
-<product> {product name}
-<features> {a list of the product's features}
-
-Use these details to create an immersive narrative that paints a vivid picture of the user experience within the cabin, featuring the unique benefits and luxurious touch provided by each product. Rather than merely outlining the features, strive to showcase how they elevate the overall comfort and luxury of the cabin space. Remember to maintain an engaging and persuasive tone to attract potential customers browsing the ship's website. Your goal is to bring the luxury and charm of the ship's room to life through these products.""","[6.0, 7.0, 6.0, 7.0, 8.0, 3.0, 7.0, 4.0, 4.0, 8.0, 6.0, 7.0, 5.0, 4.0, 8.0, 7.0, 8.0, 7.0, 7.0, 8.0]",6.35
-"""In the 'input', you are given a series of upscale products along with their highlighted features. Each product is denoted as follows:
-
-<product> {product name}
-<features> {list of features of the product}
-
-Your mission is to craft a compelling and opulent depiction of a deluxe ship cabin, seamlessly integrating these products into the description. Rather than merely listing the product features, strive to illuminate the elevated user experience they provide. This description is intended for promotional purposes on the ship's luxury booking website, so make sure to use a captivating and alluring style that further amplifies the lavish ambiance. Remember, the objective is not to echo technical details, but to convey the sheer pleasure and comfort that these products bestow to the overall cabin experience.""","[6.0, 7.0, 9.0, 4.0, 8.0, 7.0, 6.5, 7.0, 8.0, 8.0, 3.0, 6.0, 1.0, 6.5, 6.0, 8.0, 9.7, 5.0, 7.5, 4.0]",6.36
-"""In the 'input', you will receive a collection of high-end products along with their distinctive features. Each product will be detailed as follows: 
-
-<product> {product name}
-<features> {list of features of the product}
-
-Your task is to craft an alluring and upscale description of a premium ship cabin, integrating these products. A mere list of product features is not enough; strive to emphasize the enhanced user experience offered by these products. This description will be used for promotional purposes on the ship's website, therefore you must ensure your writing radiates appeal and captivation that amplifies the luxurious aura. Avoid focusing solely on technical specifications, and rather, concentrate on the opulence, decadence and ease these products confer on the overall cabin ambience.""","[9.8, 8.7, 6.5, 9.0, 2.0, 4.0, 8.0, 5.0, 4.0, 7.0, 5.0, 3.0, 8.0, 8.0, 9.0, 5.0, 5.0, 8.0, 6.0, 7.0]",6.4
-"""As an input, you'll receive a sequence of product details, each given in the format: 
-
-<product> {product name}
-<features> {list of features of the product}
-
-Your task is to creatively craft a compelling description of a luxurious ship cabin, incorporating these products into your writing. Rather than simply listing out the product features, your goal should be to highlight how their unique functionalities can enhance the user's experience within the cabin space. Make sure to adopt an engaging tone that draws in potential customers on the ship's website. Focus on showcasing luxury and comfort provided by these products in the ship room.""","[7.0, 7.0, 6.0, 7.0, 5.0, 8.0, 6.0, 7.0, 4.0, 8.0, 8.0, 7.0, 3.0, 6.0, 6.0, 8.0, 8.0, 5.0, 6.0, 7.0]",6.45
-"""
-In the 'input', you will receive a series of different products provided along with their respective features. Each product will be presented in this manner: 
-
-<product> {product name}
-<features> {list of features of the product}
-
-Your task is to create a captivating and luxurious description of a premium ship cabin, where these products are incorporated. You should not merely list the features of the products; instead, aim to accentuate the user experience they offer. This description is meant for marketing purposes on the ship's website, so ensure to write in an appealing and engaging tone that enhances the luxury vibe. The goal is not to reproduce technical specifications, but rather the indulgence and comfort these products add to the cabin experience.
-""","[8.0, 8.5, 6.0, 7.0, 8.5, 4.0, 9.0, 4.0, 4.0, 6.0, 8.0, 8.5, 6.0, 8.0, 6.0, 5.0, 8.0, 7.0, 3.0, 7.0]",6.575
-"""In the 'input', you are given details about various products and their features. Each of these products are set out like this: 
-
-<product> {product name}
-<features> {list of features of the product}
-
-Your task is to weave these products into an exquisite description of a high-end ship cabin, emphasizing not just the bare product features, but the elevated guest experience they cater to. This description is intended for promotional on the ship's website. Therefore, your tone should be enticing and convey a sense of luxury. The mission is not to reiterate technical details, but to provide a pictorial representation of the decadence and relaxation that these products contribute to the overall cabin experience.""","[3.0, 6.0, 7.5, 8.0, 9.0, 8.0, 7.0, 6.0, 6.0, 6.0, 7.5, 8.0, 9.0, 7.0, 7.0, 5.0, 7.0, 3.0, 3.0, 9.0]",6.6

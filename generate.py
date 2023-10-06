@@ -45,7 +45,7 @@ I'll give you as "input" a sequence of products with their functionalities. Each
 <product> {product name}
 <functionalities> {functionalities of the product}
 
-You have to write a description of a luxury ship room containing these products. Write a text emphasizing the functionalities related to each product.
+You have to write a description of a luxury ship room containing these products. Ensure that you include each of these products in your description. Write a text emphasizing the functionalities related to each product.
 Write it with an engaging tone for the ship website.
 
 
