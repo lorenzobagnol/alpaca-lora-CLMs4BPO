@@ -68,7 +68,7 @@ def generate_one_step(input):
         do_sample=True,
         repetition_penalty=1.16
     )
-    prompt = prompter.generate_prompt(input)
+    prompt = prompter.generate_prompt(single_instruction, input)
     input_ids = tokenizer(prompt, return_tensors="pt").input_ids
     input_ids = input_ids.to(device)
     with torch.no_grad():
