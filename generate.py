@@ -3,8 +3,6 @@ from utils.prompter import Prompter
 import torch
 from peft import PeftModel
 import torch
-import pandas as pd
-from tqdm import tqdm
 
 
 
