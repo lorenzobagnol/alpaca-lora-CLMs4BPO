@@ -21,7 +21,7 @@ Remember that your role is not just to list products, it's about intricately int
 Ensure that all products are equally considered and incorporated into the narrative seamlessly. The narrative should aim to evoke the desires of the readers, making the room’s allure practically irresistible.
 """
 
-
+# search for a CUDA device
 if torch.cuda.is_available():
     device = "cuda"
 else:
@@ -32,7 +32,8 @@ try:
 except:  # noqa: E722
     pass
 
-prompter = Prompter()
+# load prompter, tokenizer, model and its instruction-tuned version using LoRA 
+prompter = Prompter() # Prompter without args will use the alpaca base template in templates/alpaca.json
 tokenizer = LlamaTokenizer.from_pretrained("huggyllama/llama-7b")
 model = LlamaForCausalLM.from_pretrained(
     "huggyllama/llama-7b",
@@ -51,6 +52,7 @@ model.config.pad_token_id = tokenizer.pad_token_id = 0  # unk
 model.config.bos_token_id = 1
 model.config.eos_token_id = 2
 
+# set model in evaluation mode
 model.eval()
 if torch.__version__ >= "2":
     model = torch.compile(model)

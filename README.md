@@ -1,9 +1,9 @@
 # CLMs4BPO
 
-### Local Setup
-Install dependencies from command line:
+## Setup
+Installare le librerie di python necessarie tramite il comando:
 
 `pip install -r requirements.txt`
 
-### Run the code
-Open the demo.ipynb to try the code
+## Eseguire il codice
+Per provare il codice, aprire il notebook demo.ipynb.
