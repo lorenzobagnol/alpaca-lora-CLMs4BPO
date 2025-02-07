@@ -1,34 +1,13 @@
 from transformers import GenerationConfig, LlamaTokenizer, LlamaForCausalLM
-from utils.prompter import Prompter
 import torch
 from peft import PeftModel
 import torch
 import pandas as pd
 from tqdm import tqdm
 
+from utils.prompter import Prompter
+from utils.dataset_utils import load_amazon_dataset, generate_input, single_to_multiple_prod_list
 
-cables=pd.read_csv("../amazon-dataset/cables.csv")
-amps=pd.read_csv("../amazon-dataset/home_audio.csv")
-teles=pd.read_csv("../amazon-dataset/televisions.csv")
-cables = cables.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
-amps = amps.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
-teles = teles.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
-
-single_instruction="""
-I'll give you as "input" a sequence of products with their functionalities. Each product is in the form:
-
-<product 1> {product name}
-<features> {list of features of the product 1}
-
-<product 2> {product name}
-<features> {list of features of the product 2}
-
-<product 3> {product name}
-<features> {list of features of the product 3}
-
-You have to write a description of a luxury ship room containing these products. Do not copy the features, try to focus on the user experience instead of the technical details.
-Write it with an engaging tone for the ship website.
-"""
 
 instruction_1="""
 I'll give you as "input" a product with his features in the form:
@@ -51,10 +30,15 @@ Write it with an engaging tone for the ship website.
 
 """
 
+cables=pd.read_csv("../amazon-dataset/cables.csv")
+amps=pd.read_csv("../amazon-dataset/home_audio.csv")
+teles=pd.read_csv("../amazon-dataset/televisions.csv")
+cables = cables.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
+amps = amps.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
+teles = teles.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
 prod_list=[prod for prod in amps["title"]]+[prod for prod in teles["title"]]+[prod for prod in cables["title"]]
 spec_list=[feat for feat in amps["feature"]]+[feat for feat in teles["feature"]]+[feat for feat in cables["feature"]]
 input_1=list()
-assert len(prod_list)==len(spec_list)
 for i in range(len(prod_list)):
     input_1.append("<product> "+prod_list[i]+"\n<features> "+str(spec_list[i])+"\n\n")
 
@@ -66,7 +50,7 @@ else:
 try:
     if torch.backends.mps.is_available():
         device = "mps"
-except:  # noqa: E722
+except:  
     pass
 
 prompter = Prompter()
@@ -93,17 +77,15 @@ if torch.__version__ >= "2":
     model = torch.compile(model)
 
 
-def generate_two_step():
-    response_1=list()
+def generate_two_step(step_one_instruction:str, step_two_instruction:str, input_product_list:list):
+
+    response_one=list()
     generation_config = GenerationConfig(
-        #temperature=0.2,
-        #top_p=0.75,
-        #top_k=40,
         num_beams=4,
         max_new_tokens=400,
     )
-    for i in tqdm(range(len(input_1))):
-        prompt = prompter.generate_prompt(instruction_1, input_1[i])
+    for i in tqdm(range(len(input_product_list))):
+        prompt = prompter.generate_prompt(step_one_instruction, input_product_list[i])
         input_ids = tokenizer(prompt, return_tensors="pt").input_ids
         input_ids=input_ids.to(device)
         with torch.no_grad():
@@ -115,7 +97,7 @@ def generate_two_step():
             )
         response = tokenizer.decode(outputs.sequences[0], skip_special_tokens=True)
         response= prompter.get_response(response)
-        response_1.append(response)
+        response_one.append(response)
 
     generation_config = GenerationConfig(
         temperature=0.2,
@@ -129,10 +111,11 @@ def generate_two_step():
 
     input_2=list()
     response_2=list()
+
     for i in tqdm(range(20)):
-        input="<product> "+prod_list[i]+"\n"+"<functionalities> "+response_1[i]+"\n\n"+"<product> "+prod_list[20+i]+"\n"+"<functionalities> "+response_1[20+i]+"\n\n"+"<product> "+prod_list[40+i]+"\n"+"<functionalities> "+response_1[40+i]+"\n\n"
+        input="<product> "+prod_list[i]+"\n"+"<functionalities> "+response_one[i]+"\n\n"+"<product> "+prod_list[20+i]+"\n"+"<functionalities> "+response_one[20+i]+"\n\n"+"<product> "+prod_list[40+i]+"\n"+"<functionalities> "+response_one[40+i]+"\n\n"
         input_2.append(input)
-        prompt = prompter.generate_prompt(instruction_2, input)
+        prompt = prompter.generate_prompt(step_two_instruction, input)
         input_ids = tokenizer(prompt, return_tensors="pt").input_ids
         input_ids = input_ids.to(device)
         with torch.no_grad():
@@ -152,7 +135,8 @@ def generate_two_step():
         df.loc[len(df)]=[input_1[i],response_2[i]]
     return df
 
-def generate_one_step(instruction=single_instruction):
+def generate_on_dataset_one_step(instruction:str, input_product_list:list):
+
     generation_config = GenerationConfig(
     temperature=0.2,
     top_p=0.75,
@@ -163,11 +147,9 @@ def generate_one_step(instruction=single_instruction):
     repetition_penalty=1.16
     )
 
-    one_step_input=list()
-    one_step_response=list()
+    response=list()
     for i in tqdm(range(20),desc="Generating"):
-        input="<product> "+prod_list[i]+"\n"+"<features> "+spec_list[i]+"\n\n"+"<product> "+prod_list[20+i]+"\n"+"<features> "+spec_list[20+i]+"\n\n"+"<product> "+prod_list[40+i]+"\n"+"<features> "+spec_list[40+i]+"\n\n"
-        one_step_input.append(input)
+        input = input_product_list[i]
         prompt = prompter.generate_prompt(instruction, input)
         input_ids = tokenizer(prompt, return_tensors="pt").input_ids
         input_ids = input_ids.to(device)
@@ -180,10 +162,9 @@ def generate_one_step(instruction=single_instruction):
             )
         response = tokenizer.decode(outputs.sequences[0], skip_special_tokens=True)
         response= prompter.get_response(response)
-        one_step_response.append(response)
+        response.append(response)
 
-
-    df=pd.DataFrame(columns=["input","response"])
-    for i in range(len(one_step_response)):
-        df.loc[len(df)]=[one_step_input[i],one_step_response[i]]
+    df=pd.DataFrame()
+    df["response"]=response
+    df["input"]=input_product_list
     return df
