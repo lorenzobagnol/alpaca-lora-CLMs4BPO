@@ -168,3 +168,8 @@ def generate_on_dataset_one_step(instruction:str, input_product_list:list):
     df["response"]=response
     df["input"]=input_product_list
     return df
+
+
+
+if __name__=="__main__":
+    

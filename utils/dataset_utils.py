@@ -3,22 +3,6 @@ from tqdm import tqdm
 import os
 import pandas as pd
 
-
-def load_product_dataset(dataset_path:str, cut_at:int)->pd.DataFrame:
-    """
-    Load the Amazon dataset containing information about products and their features.
-
-    Args:
-    """
-
-    products=pd.read_csv(dataset_path)
-    categories=products["category"].unique()
-    # create a balanced dataset
-    balanced_products=pd.DataFrame(columns=products.columns)
-    for category in categories:
-        balanced_products=balanced_products.append(products[products["category"]==category][:cut_at])
-    return balanced_products
-
 def generate_input(data:pd.DataFrame, return_type:Literal["once", "all"])->list:
     """
     Generate input for the Alpaca model to generate descriptions of luxury ship rooms containing products from the Amazon dataset.

@@ -6,7 +6,7 @@ import credentials
 import pandas as pd
 import numpy as np
 
-from evaluate_with_gpt4 import eval
+from utils.evaluate_with_gpt4 import eval_with_openai
 from generate import generate_on_dataset_one_step
 from utils.dataset_utils import load_product_dataset, generate_input, single_to_multiple_prod_list
 
@@ -72,10 +72,7 @@ def prompt_generator_loop(iterations:int):
         
 
 
-
-
 if __name__ == "__main__":
     
     dataset_path="./dataset/electronic-products.csv"
-    data = load_product_dataset(dataset_path)
     input_list = generate_input(data, return_type="once")

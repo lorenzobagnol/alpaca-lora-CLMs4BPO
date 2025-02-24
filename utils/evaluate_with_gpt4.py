@@ -30,7 +30,7 @@ You have to write a description of a luxury ship room containing these products.
 Write it with an engaging tone for the ship website.
 """
 
-def eval(response):
+def eval_with_openai(response):
     prod_list=[prod for prod in amps["title"]]+[prod for prod in teles["title"]]+[prod for prod in cables["title"]]
     spec_list=[feat for feat in amps["feature"]]+[feat for feat in teles["feature"]]+[feat for feat in cables["feature"]]
     input=list()
