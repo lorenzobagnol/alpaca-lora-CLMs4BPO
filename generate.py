@@ -1,15 +1,13 @@
-from transformers import GenerationConfig, LlamaTokenizer, LlamaForCausalLM
+from transformers import GenerationConfig
 import torch
-from peft import PeftModel
 import torch
 import pandas as pd
 from tqdm import tqdm
 
-from utils.prompter import Prompter
-from utils.dataset_utils import load_amazon_dataset, generate_input, single_to_multiple_prod_list
+from model.alpaca_lora import AlpacaLoraModel
 
 
-instruction_1="""
+instruction_cot_1="""
 I'll give you as "input" a product with his features in the form:
 
 <product> {product name}
@@ -18,7 +16,7 @@ I'll give you as "input" a product with his features in the form:
 Provide me with the main things a user can do with this product. Do not copy the features, try to focus on the user experience instead of the technical details.
 """
 
-instruction_2 = """
+instruction_cot_2 = """
 I'll give you as "input" a sequence of products with their functionalities. Each product is in the form:
 
 <product> {product name}
@@ -30,20 +28,15 @@ Write it with an engaging tone for the ship website.
 
 """
 
-# cables=pd.read_csv("../amazon-dataset/cables.csv")
-# amps=pd.read_csv("../amazon-dataset/home_audio.csv")
-# teles=pd.read_csv("../amazon-dataset/televisions.csv")
-# cables = cables.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
-# amps = amps.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
-# teles = teles.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
-# prod_list=[prod for prod in amps["title"]]+[prod for prod in teles["title"]]+[prod for prod in cables["title"]]
-# spec_list=[feat for feat in amps["feature"]]+[feat for feat in teles["feature"]]+[feat for feat in cables["feature"]]
-# input_1=list()
-# for i in range(len(prod_list)):
-# 	input_1.append("<product> "+prod_list[i]+"\n<features> "+str(spec_list[i])+"\n\n")
+basic_instruction = """
+	I'll give you as "input" a sequence of products with their functionalities. Each product is in the form:
 
+	<product> {product name}
+	<features> {list of features of the product}
 
-
+	You have to write a description of a luxury room containing these products. Do not copy the features of each product, instead try to focus on the user experience related to each product without listing technical details.
+	Write it in an appealing tone for the website that will advertise the room.
+	"""
 
 # def generate_two_step(step_one_instruction:str, step_two_instruction:str, input_product_list:list):
 
@@ -103,38 +96,18 @@ Write it with an engaging tone for the ship website.
 #         df.loc[len(df)]=[input_1[i],response_2[i]]
 #     return df
 
-def generate_on_dataset_one_step(instruction:str, df:pd.DataFrame):
+def generate_on_dataset(alpaca_model: AlpacaLoraModel, instruction:str):
 
-	generation_config = GenerationConfig(
-	temperature=0.2,
-	top_p=0.75,
-	top_k=40,
-	num_beams=1,
-	max_new_tokens=800,
-	do_sample=True,
-	repetition_penalty=1.16
-	)
+	df = pd.read_csv("./dataset/electronic-products.csv", index_col=False)
 
 	output_df = pd.DataFrame(columns=["room", "response"])
 
 	for i in tqdm(range(20),desc="Generating"):
-
 		input = ""
 		for index, row in df.loc[df["room"]==i]:
 			input = input + "<product> "+row["title"]+"\n<features> "+str(row["feature"])+"\n\n"
 
-		prompt = prompter.generate_prompt(instruction, input)
-		input_ids = tokenizer(prompt, return_tensors="pt").input_ids
-		input_ids = input_ids.to(device)
-		with torch.no_grad():
-			outputs = model.generate(
-				input_ids=input_ids,
-				generation_config=generation_config,
-				return_dict_in_generate=True,
-				output_scores=True,
-			)
-		response = tokenizer.decode(outputs.sequences[0], skip_special_tokens=True)
-		response = prompter.get_response(response)
+		response = alpaca_model.generate(instruction, input)
 
 		temp_df = pd.DataFrame([[i, response]], columns=["room", "response"])
 		output_df = pd.concat([output_df, temp_df], ignore_index=True)
@@ -144,36 +117,5 @@ def generate_on_dataset_one_step(instruction:str, df:pd.DataFrame):
 
 if __name__=="__main__":
 
-	if torch.cuda.is_available():
-		device = "cuda"
-	else:
-		device = "cpu"
-	try:
-		if torch.backends.mps.is_available():
-			device = "mps"
-	except:  
-		pass
-
-	prompter = Prompter()
-	tokenizer = LlamaTokenizer.from_pretrained("huggyllama/llama-7b")
-	model = LlamaForCausalLM.from_pretrained(
-		"huggyllama/llama-7b",
-		load_in_8bit=False,
-		torch_dtype=torch.float16,
-		device_map="auto",
-	)
-	model = PeftModel.from_pretrained(
-				model,
-				"tloen/alpaca-lora-7b",
-				torch_dtype=torch.float16,
-			).to(device)
-
-	# unwind broken decapoda-research config
-	model.config.pad_token_id = tokenizer.pad_token_id = 0  # unk
-	model.config.bos_token_id = 1
-	model.config.eos_token_id = 2
-
-	model.eval()
-	model = torch.compile(model) # necessary from torch 2.x
-
-
+	alpaca_model = AlpacaLoraModel()
+	df = generate_on_dataset(alpaca_model, basic_instruction)

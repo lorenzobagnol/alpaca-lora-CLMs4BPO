@@ -1,20 +1,10 @@
 import openai
 import os
-import credentials
-os.environ["OPENAI_API_KEY"] = credentials.api_key
-openai.api_key = os.getenv("OPENAI_API_KEY")
-from utils.prompter import Prompter
+
 import pandas as pd
 from tqdm import tqdm
-import numpy as np
-import re
 
-cables=pd.read_csv("../amazon-dataset/cables.csv")
-amps=pd.read_csv("../amazon-dataset/home_audio.csv")
-teles=pd.read_csv("../amazon-dataset/televisions.csv")
-cables = cables.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
-amps = amps.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
-teles = teles.sample(frac=1, random_state=10).reset_index(drop=True)[:20]
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 eval_prompt="""
 [Instruction]
@@ -31,21 +21,22 @@ Write it with an engaging tone for the ship website.
 """
 
 def eval_with_openai(response):
-    prod_list=[prod for prod in amps["title"]]+[prod for prod in teles["title"]]+[prod for prod in cables["title"]]
-    spec_list=[feat for feat in amps["feature"]]+[feat for feat in teles["feature"]]+[feat for feat in cables["feature"]]
-    input=list()
-    assert len(prod_list)==len(spec_list)
-    for i in tqdm(range(20),desc="Evaluating"):
-        input.append("<product> "+prod_list[i]+"\n"+"<features> "+spec_list[i]+"\n\n"+"<product> "+prod_list[20+i]+"\n"+"<features> "+spec_list[20+i]+"\n\n"+"<product> "+prod_list[40+i]+"\n"+"<functionalities> "+spec_list[40+i]+"\n\n")
 
-    val_list=list()
-    for i in tqdm(range(20)):
-        prompt=eval_prompt+"Input:\n"+input[i]+"[The Start of Assistant's Answer]\n"+response[i]+"\n[The End of Assistant's Answer]"
-        val = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages= [ {"role": "system","content": "You are a helpful assistant."},
-                        {"role": "user","content": prompt}],
-            temperature=0)
-        val_list.append(float(val["choices"][0]["message"]["content"].split("[[")[1].split("]]")[0]))
-    return val_list
+	df = pd.read_csv("./dataset/electronic-products.csv", index_col=False)
+
+	val_list=list()
+	for i in tqdm(range(20),desc="Evaluating"):
+
+		input = ""
+		for index, row in df.loc[df["room"]==i]:
+			input = input + "<product> "+row["title"]+"\n<features> "+str(row["feature"])+"\n\n"
+
+		prompt=eval_prompt+"Input:\n"+input[i]+"[The Start of Assistant's Answer]\n"+response[i]+"\n[The End of Assistant's Answer]"
+		val = openai.ChatCompletion.create(
+			model="gpt-4o-mini",
+			messages= [ {"role": "system","content": "You are a helpful assistant."},
+						{"role": "user","content": prompt}],
+			temperature=0)
+		val_list.append(float(val["choices"][0]["message"]["content"].split("[[")[1].split("]]")[0]))
+	return val_list
 
